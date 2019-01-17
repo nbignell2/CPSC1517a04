@@ -125,7 +125,7 @@ namespace OOPsReview
         //This constructor will allow the user of the class to pass in a set of values
         // That will be used at the time of instance creation to set the values of the 
         // internal datamember's auto properties.
-        public Die(int sides, string color, int facevalue)
+        public Die(int sides, string color)
         {
             Sides = sides; //Do not set it to datamember because users can't be trusted!
             Color = color;
