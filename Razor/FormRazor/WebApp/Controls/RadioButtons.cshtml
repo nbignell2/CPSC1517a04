@@ -1,16 +1,103 @@
 ﻿@{
-    Layout = "~/_Layout.cshtml"; <!-- Uses relative addressing ~goes to WebApp-->
+    Layout = "~/_Layout.cshtml";
     Page.Title = "RadioButtons";
-}
+    var language = Request.Form["languagegroup"];
+    var script = Request.Form["scriptgroup"];
+    //these ifs are required because .Equals() is used
+    //    on the checked parameter in our form
+    //on the first pass of the page, language and script
+    //    will be null.
+    //.Equals() does not like nulls
+    if (language == null)
+    {
+        language = "";
+    }
+    if (script == null)
+    {
+        script = "";
+    }
 
+}
 @section head{
-    <link href="~/Content/CustomStyles.css" rel="stylesheet" />
+
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
 }
 
 @section banner{
-    <h1>Radio Buttons for Razor Form Samples</h1>
+    <h1>RadioButtons for Razor Form Samples</h1>
 }
 
+@if (IsPost)
+{
+    if (string.IsNullOrEmpty(language) ||
+        string.IsNullOrEmpty(script))
+    {
+        <p>
+            <span style="color:firebrick">
+                Make a choice from both groups.
+            </span>
+        </p>
+    }
+    else
+    {
+        if (language.Equals("C#"))
+        {
+            <p>You will greatly enjoy CPSC1517 because we are coding with C#.</p>
+        }
+        else
+        {
+            <p>Too bad. CPSC1517 codes with C#.</p>
+        }
+        if (script.Equals("Razor"))
+        {
+            <p>You will greatly enjoy CPSC1517 because we are using Razor to process the form.</p>
+        }
+        else
+        {
+            <p>Too bad. CPSC1517 uses Razor to process the form..</p>
+        }
+    }
+}
+
+<form id="theform" method="post">
+    <div class="col-md-offset-2">
+        <label for="languagegroup">
+            Choice your favourite programming language
+        </label><br />
+        <input type="radio" id="languagegroup" name="languagegroup"
+               value="C#"
+               checked="@(language.Equals("C#")?true:false)" />&nbsp;&nbsp;C#<br />
+        <input type="radio" id="languagegroup" name="languagegroup"
+               value="VB"
+               checked="@(language.Equals("VB")?true:false)" />&nbsp;&nbsp;Visual Basic<br />
+        <input type="radio" id="languagegroup" name="languagegroup"
+               value="Cobol"
+               checked="@(language.Equals("Cobol")?true:false)" />&nbsp;&nbsp;Cobol<br />
+        <input type="radio" id="languagegroup" name="languagegroup"
+               value="Fortran"
+               checked="@(language.Equals("Fortran")?true:false)" />&nbsp;&nbsp;Fortran<br />
+        <input type="radio" id="languagegroup" name="languagegroup"
+               value="Pascal"
+               checked="@(language.Equals("Pascal")?true:false)" />&nbsp;&nbsp;Pascal<br /><br />
+        <label for="scriptgroup">
+            Choice your favourite scripting code
+        </label><br />
+        <input type="radio" id="scriptgroup" name="scriptgroup"
+               value="JS"
+               checked="@(script.Equals("JS")?true:false)" />&nbsp;&nbsp;Javascript<br />
+        <input type="radio" id="scriptgroup" name="scriptgroup"
+               value="Razor"
+               checked="@(script.Equals("Razor")?true:false)" />&nbsp;&nbsp;Razor<br />
+        <input type="radio" id="scriptgroup" name="scriptgroup"
+               value="PHP"
+               checked="@(script.Equals("PHP")?true:false)" />&nbsp;&nbsp;PHP<br /><br />
+        <button type="submit" id="formbutton" name="formbutton"
+                value="Submit" class="btn btn-primary">
+            Submit
+        </button>
+    </div>
+</form>
+
 @section footer{
-    &copy; CPSC1517 NAIT all rights reserved
+    &copy; CPSC1517 Nait, all rights reservered
 }
