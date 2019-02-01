@@ -24,11 +24,5 @@ namespace OOPsReview
             Player1Roll = player1;
             Player2Roll = player2;
         }
-
-
-        public string RollResults()
-        {
-            //Call roll from seperate class??
-        }
     }
 }
