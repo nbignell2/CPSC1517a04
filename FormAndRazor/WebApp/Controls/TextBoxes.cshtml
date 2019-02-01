@@ -1,0 +1,93 @@
+﻿@{
+    //these pages process PHYSICALLY from TOP to BOTTOM
+
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "TextBoxes";
+
+    // gather the data from the form
+    //data will come in as strings
+    //if the .Form field does NOT exist, null is returned
+    var leftside = Request.Form["leftinput"];
+    var rightside = Request.Form["rightinput"];
+    var thebutton = Request.Form["formbutton"];  //button has a value parameter
+}
+@section head{
+
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
+}
+
+@section banner{
+    <h1>TextBoxes for Razor Form Samples</h1>
+}
+<!-- content body-->
+@if (IsPost)
+{
+    if (thebutton.Equals("reset"))
+    {
+        leftside = "";
+        rightside = "";
+    }
+    else
+    {
+        //vaildation of data coming in
+        if (string.IsNullOrEmpty(leftside) ||
+            string.IsNullOrEmpty(rightside))
+        {
+            <p>Enter data in both input fields (name and colour).</p>
+        }
+        else
+        {
+            if (thebutton.Equals("leftinput"))
+            {
+                <p>Hello. Your name is @leftside . </p>
+            }
+            else
+            {
+                <p>@leftside , your favourite colour is @rightside . </p>
+            }
+        }
+    }
+}
+else
+{
+    <p>this form is in initialization</p>
+}
+<form id="theform" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <label for="leftinput">Your Name:</label>
+            <input type="text" id="leftinput" name="leftinput"
+                   placeholder="enter your name"
+                   value="@leftside" />
+            <button type="submit" id="formbutton" name="formbutton"
+                    class="btn" value="leftinput">
+                Press Left
+            </button>
+        </div>
+        <div class="col-md-6">
+            <label for="rightinput">Your Favourite Colour:</label>
+            <input type="text" id="rightinput" name="rightinput"
+                   placeholder="enter your colour"
+                   value="@rightside" />
+            <button type="submit" id="formbutton" name="formbutton"
+                    class="btn" value="rightinput">
+                Press Right
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-5">
+            <button type="submit" id="formbutton" name="formbutton"
+                    class="btn" value="reset">
+                Reset
+            </button>
+        </div>
+    </div>
+</form>
+
+
+
+@section footer{
+    &copy; CPSC1517 Nait, all rights reservered
+}
+

@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@Page.Title</title>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.js"></script>
+    @RenderSection("head", required: false)
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- this is the menu placeholder-->
+        @RenderPage("~/_Menu.cshtml")
+        <br/><br/>
+        <div class="jumbotron">
+            @RenderSection("banner")
+        </div>
+        @RenderBody()
+        <hr style="height:5px" />
+        @RenderSection("footer", required: false)
+    </div>
+</body>
+</html>
