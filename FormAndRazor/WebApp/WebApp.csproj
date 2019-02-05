@@ -114,6 +114,8 @@
     <Content Include="Controls\CheckBoxes.cshtml" />
     <Content Include="Controls\DropDown.cshtml" />
     <Content Include="DBPages\SingleQuery.cshtml" />
+    <Content Include="DBPages\MultiRecordQuery.cshtml" />
+    <Content Include="DBPages\MultiRecordWebGrid.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
