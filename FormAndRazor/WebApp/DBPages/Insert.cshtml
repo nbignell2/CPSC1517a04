@@ -1,0 +1,148 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Crud : Insert";
+
+    var thebutton = Request.Form["formButton"];
+
+    var productname = "";
+    var quantityperunit = "";
+    var unitprice = "";
+    var unitsinstock = "";
+    var unitsonorder = "";
+    var reorderlevel = "";
+    var selectedsupplier = "";
+    var selectedcategory = "";
+    var discontinued = "";
+
+}
+@section head{
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
+}
+@section banner{
+    <h1>CRUD : Insert</h1>
+    <div class="alert alert-info">
+        <blockquote>
+            This form will demonstrate the create (insert) of CRUD. It will
+            demonstrate using bootstrap text alignment for setting up right align
+            text, default left aligned controls and centered aligned submit buttons.
+            The input controls and their label text controls are in a 2 column format.
+            The submit buttons are centered on another row. The introduction
+            blockquote uses the bootstrap class alert alert-info. Tool tips are used.
+            Try/Catch will be used to capture processing errors.
+        </blockquote>
+    </div>
+
+}
+@if (IsPost)
+{
+
+    if (thebutton.Equals("reset"))
+    {
+        <p class="col-sm-11 text-center">Cleared by user.</p>
+        discontinued = "";
+    }
+    else
+    {
+        //retrieve form input values
+        productname = Request.Form["ProductName"];
+        selectedsupplier = Request.Form["SupplierID"];
+        selectedcategory = Request.Form["CategoryID"];
+        quantityperunit = Request.Form["QuantityPerUnit"];
+        unitprice = Request.Form["UnitPrice"];
+        unitsinstock = Request.Form["UnitsInStock"];
+        unitsonorder = Request.Form["UnitsOnOrder"];
+        reorderlevel = Request.Form["ReorderLevel"];
+        discontinued = Request.Form["Discontinued"];
+
+        //process incoming data
+        //user friendly error handling
+
+        try
+        {
+            //connect to db
+            var db = Database.Open("NWDB");
+            //create sql insert command
+            //note the number and position of placeholders for each supplied field
+            //ternary operator used for nullable fields
+            var insertcommand =
+       "INSERT INTO Products (ProductName, SupplierID, CategoryID, QuantityPerUnit, "
+             + " UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued) "
+             + " VALUES(@0, @1, @2, @3, @4, @5, @6, @7, @8)";
+            db.Execute(insertcommand, productname,
+                    string.IsNullOrEmpty(selectedsupplier) ? null : selectedsupplier,
+                    string.IsNullOrEmpty(selectedcategory) ? null : selectedcategory,
+                    string.IsNullOrEmpty(quantityperunit) ? null : quantityperunit,
+                    string.IsNullOrEmpty(unitprice) ? null : unitprice,
+                    string.IsNullOrEmpty(unitsinstock) ? null : unitsinstock,
+                    string.IsNullOrEmpty(unitsonorder) ? null : unitsonorder,
+                    string.IsNullOrEmpty(reorderlevel) ? null : reorderlevel,
+                    0);
+            //use of bootstrap text positioning
+            <p class="col-sm-11 text-center">
+                <span style="color:green">
+                    <strong>
+                        New product added to file.
+                    </strong>
+                </span>
+            </p>
+        }
+        catch (Exception ex)
+        {
+            <p class="col-sm-11 text-center">
+                <span style="color:firebrick">
+                    <strong>@ex.Message</strong>
+                </span>
+            </p>
+        }
+    }
+}
+
+<form id="theForm" action="" method="post">
+    <div class="row ">
+        <div class="col-sm-5 text-right">
+            <label id="ProductName">Name:</label><br />
+            <label id="SupplierID">Supplier:</label><br />
+            <label id="CategoryID">Category:</label><br />
+            <label id="QuantityPerUnit">Qty/Unit:</label><br />
+            <label id="UnitPrice">Unit Price:</label><br />
+            <label id="UnitsInStock">QOH:</label><br />
+            <label id="UnitsOnOrder">QOO:</label><br />
+            <label id="ReorderLevel">ROL:</label><br />
+            <label id="Discontinued">Disc.:</label><br /><br />
+        </div>
+        <div class="col-sm-5">
+
+            <input name="ProductName" id="ProductName" type="text" value="@productname"
+                   title="Product Name." /><br />
+            <input name="SupplierID" id="SupplierID" type="number" value="@selectedsupplier" 
+                   step="1" min="1"/><br />
+            <input name="CategoryID" id="CategoryID" type="number" value="@selectedcategory" 
+                   step="1" min="1"/><br />
+            <input name="QuantityPerUnit" id="QuantityPerUnit" type="text"
+                   value="@quantityperunit" /><br />
+            <input name="UnitPrice" id="UnitPrice" type="number" value="@unitprice" 
+                   step="0.01" min="0.00"/><br />
+            <input name="UnitsInStock" id="UnitsInStock" type="number" value="@unitsinstock"
+                   step="1" min="0" title="Quantity on Hand." /><br />
+            <input name="UnitsOnOrder" id="UnitsOnOrder" type="text" value="@unitsonorder"
+                   step="1" min="0" title="Quantity on Order." /><br />
+            <input name="ReorderLevel" id="ReorderLevel" type="text" value="@reorderlevel"
+                   step="1" min="0" title="Reorder Level." /><br />
+            <input name="Discontinued" id="Discontinued" type="checkbox"
+                   title="Product is discontinued if checked."
+                   @(string.IsNullOrEmpty(discontinued) ? "" : "checked") /><br /><br />
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-11 text-center">
+            <button type="submit" name="formButton" value="submit"
+                    class="btn btn-primary" style="width:90px">
+                Add
+            </button>&nbsp;&nbsp;
+            <button type="submit" name="formButton" value="reset"
+                    class="btn " style="width:90px">
+                Clear
+            </button>
+        </div>
+    </div>
+</form>

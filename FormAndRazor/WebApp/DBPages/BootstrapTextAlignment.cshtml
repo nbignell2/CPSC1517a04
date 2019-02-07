@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "BootStrap: Text Alignment";
+
+
+
+}
+@section head{
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
+}
+@section banner{
+    <h1>BootStrap Text Alignment</h1>
+    <div class="alert alert-info">
+        <blockquote>
+            It will demonstrate using bootstrap text alignment for setting up right align
+            text, default left aligned controls and centered aligned submit buttons.
+        </blockquote>
+    </div>
+    <div class="row ">
+        <div class="col-sm-4 text-center" >
+            center block text here
+        </div>
+        <div class="col-sm-3 text-right">
+            right align block text here
+        </div>
+        <div class="col-sm-5 text-left">
+            left align block text here (also default)
+        </div>
+    </div>
+
+    <div class="row ">
+        <div class="col-sm-4 text-center">
+            <div class="well">
+                center well content
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="well pull-right">
+                well content pull-right
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="well">
+                default left well content
+            </div>
+        </div>
+    </div>
+
+}
+
+

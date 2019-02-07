@@ -1,22 +1,21 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en-us">
 <head>
-    <title>@Page.Title</title> <!-- At allows you to access C#-->
+    <title>@Page.Title</title>
     <script src="~/Scripts/jquery-3.3.1.js"></script>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <script src="~/Scripts/bootstrap.js"></script>
-    @RenderSection("head", required: false) <!-- Custom HTML-->
+    @RenderSection("head", required: false)
 </head>
 <body>
-    <div class="container.fluid">
-        <!-- this is the menu placeholder-->
+    <div class="container-fluid">
         @RenderPage("~/_Menu.cshtml")
         <br/><br/>
         <div class="jumbotron">
             @RenderSection("banner")
         </div>
-        @RenderBody() <!-- Places HTML automatically/Default-->
-        <hr style="height:5px" />
+
+        @RenderBody()
         @RenderSection("footer", required: false)
     </div>
 </body>
