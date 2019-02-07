@@ -59,13 +59,14 @@
                  format: (item) => item.UnitPrice.ToString("C")),//place holder has unique name of item, => forthisinstance
                 gridinstance.Column(columnName: "Discontinued", header: "Disc",
                 canSort:false,
-                format: @<input name="Discontinued" type="checkbox"
+                format: @<input id="Discontinued" name="Discontinued" type="checkbox"
                          value="@item.Discontinued" 
                          @(item.Discontinued == true ? "checked" : null)
                          disabled="disabled"/>),
-                gridinstance.Column(columnName: "Date", //If you don't give a header it will use column name 
+                gridinstance.Column(columnName: "Date",
+                canSort:false,//If you don't give a header it will use column name 
                 format: (item) => item.Date.ToString("MMMM d, yyyy")),
-                gridinstance.Column(header: "",
+                gridinstance.Column(header: "", canSort:false,
                 format: @<text>
                     <a href="~/DBPages/WebGridDestination.cshtml?pid=@item.ProductID"
                        onclick="return confirm('Are you sure you wish to view the product details of @item.ProductName')">View</a>

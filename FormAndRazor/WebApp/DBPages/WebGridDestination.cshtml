@@ -1,13 +1,13 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
     Page.Title = "WebGrid Destination";
-    var passedvalue = Request.QueryString["pid"];
+    var pid = Request.QueryString["pid"];
 
 }
 @section banner{
     <h1>DataBase: WebGrid Query</h1>
 }
 <div>
-    <h4>You passed the value of @passedvalue</h4>
+    <h4>You passed the value of @pid</h4>
 </div>
 
