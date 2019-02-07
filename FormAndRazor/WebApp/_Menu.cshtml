@@ -1,0 +1,38 @@
+﻿<!-- this will be the menu area-->
+<div class="navbar navbar-default navbar-fixed-top">
+    <!-- brand area of the menu-->
+    <div class="navbar-header">
+        <a class="navbar-brand" style="font-size:x-large">
+            <strong>Razor Samples</strong>
+        </a>
+    </div>
+    <!-- menu: menu root items-->
+    <ul class="nav navbar-nav">
+        <!-- root menu item-->
+        <li><a href="@Href("~/Default.cshtml")">Home</a></li>
+        <!-- create a drop down menu list (submenus)-->
+        <li class="dropdown">
+            <!-- it the toggle root menu item-->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Controls<b class="caret"></b></a>
+            <!-- code the actual submenu items-->
+            <ul class="dropdown-menu">
+                <li><a href="@Href("~/Controls/TextBoxes.cshtml")">TextBoxes</a></li>
+                <li><a href="@Href("~/Controls/RadioButtons.cshtml")">RadioButtons</a></li>
+                <li><a href="@Href("~/Controls/CheckBoxes.cshtml")">CheckBoxes</a></li>
+                <li><a href="@Href("~/Controls/DropDownList.cshtml")">DropDownList</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <!-- it the toggle root menu item-->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">DB Pages<b class="caret"></b></a>
+            <!-- code the actual submenu items-->
+            <ul class="dropdown-menu">
+                <li><a href="@Href("~/DBPages/SingleQuery.cshtml")">Single Query</a></li>
+                <li><a href="@Href("~/DBPages/MultiRecordQuery.cshtml")">WebGrid Query</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+

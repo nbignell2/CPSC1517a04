@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "WebGrid";
+
+    //access the argument label from the sending page using .QueryString["xxx"]
+    //QueryString returns either null (if argument did not exists) or
+    //   a string value
+    var categoryid = Request.QueryString["cid"];
+
+    //check that a value was passed
+
+    if (string.IsNullOrEmpty(categoryid))
+    {
+        Response.Redirect("MultiRecordQuery.cshtml");
+    }
+
+    //query the database using the passed value
+    var db = Database.Open("NWDB");
+    var scalarcommand = "SELECT CategoryName "
+                        + "FROM Categories "
+                        + "WHERE CategoryID = @0";
+    //QueryValue returns a single value (not a record) from the  query
+    //this value will be used in titling the WebGrid display
+    var categoryname = db.QueryValue(scalarcommand, categoryid);
+
+    var querycommand = "SELECT ProductID, ProductName, UnitPrice, UnitsInStock, Discontinued, GetDate() FakeDate "
+                        + "FROM Products "
+                        + "WHERE CategoryID = @0 "
+                        + "ORDER BY 2";
+    var results = db.Query(querycommand, categoryid);
+
+    //create an instance of WebGrid
+    //notice the collection is passed at the time of instantiation
+    //to set your page size use the attribute rowsPerPage
+    var gridinstance = new WebGrid(results, rowsPerPage:5);
+
+}
+
+@section banner{
+    <h1>DataBase: WebGrid Query</h1>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <span style="font-size:x-large"><strong>Products for @categoryname</strong></span>
+       
+            <!--Customize the WebGrid instance display-->
+            @gridinstance.GetHtml(
+             tableStyle: "table table-bordered table-striped table-hover",
+             mode: WebGridPagerModes.All,
+             firstText: "Start",
+             lastText: "End",
+            columns: gridinstance.Columns(
+                gridinstance.Column(columnName: "ProductID", header: "ID",
+                canSort:true),
+                gridinstance.Column(columnName: "ProductName", header: "Product"),
+                gridinstance.Column(columnName: "UnitPrice", header: "$",
+                 format: (item) => item.UnitPrice.ToString("0.00")),
+                gridinstance.Column(columnName: "Discontinued", header: "Disc",
+                canSort:false,
+                format: @<input name="Discontinued" type="checkbox"
+                         value="@item.Discontinued" 
+                         @(item.Discontinued == true ? "checked" : null)
+                         disabled="disabled"/>),
+                gridinstance.Column(columnName: "FakeDate", 
+                format: (item) => item.FakeDate.ToString("MMM dd, yyyy")),
+                gridinstance.Column(header: "",
+                format: @<text>
+                    <a href="~/DBPages/WebGridDestination.cshtml?pid=@item.ProductID"
+                       onclick="return confirm('Are you sure you wish to view the product details of @item.ProductName')">View</a>
+                        </text>)
+                ))
+        
+    </div>
+</div>
+
+
