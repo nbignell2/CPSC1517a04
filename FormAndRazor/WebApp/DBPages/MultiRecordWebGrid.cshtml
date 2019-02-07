@@ -23,7 +23,7 @@
     //this value will be used in titling the WebGrid display
     var categoryname = db.QueryValue(scalarcommand, categoryid);
 
-    var querycommand = "SELECT ProductID, ProductName, UnitPrice, UnitsInStock, Discontinued, GetDate() FakeDate "
+    var querycommand = "SELECT ProductID, ProductName, UnitPrice, UnitsInStock, Discontinued, GetDate() Date "
                         + "FROM Products "
                         + "WHERE CategoryID = @0 "
                         + "ORDER BY 2";
@@ -31,7 +31,7 @@
 
     //create an instance of WebGrid
     //notice the collection is passed at the time of instantiation
-    //to set your page size use the attribute rowsPerPage
+    //to alter your page size use the attribute rowsPerPage
     var gridinstance = new WebGrid(results, rowsPerPage:5);
 
 }
@@ -50,20 +50,21 @@
              mode: WebGridPagerModes.All,
              firstText: "Start",
              lastText: "End",
+             //If you change one column, you have to change all. Does not have to be in order.
             columns: gridinstance.Columns(
                 gridinstance.Column(columnName: "ProductID", header: "ID",
                 canSort:true),
                 gridinstance.Column(columnName: "ProductName", header: "Product"),
-                gridinstance.Column(columnName: "UnitPrice", header: "$",
-                 format: (item) => item.UnitPrice.ToString("0.00")),
+                gridinstance.Column(columnName: "UnitPrice", header: "Amount",
+                 format: (item) => item.UnitPrice.ToString("C")),//place holder has unique name of item, => forthisinstance
                 gridinstance.Column(columnName: "Discontinued", header: "Disc",
                 canSort:false,
                 format: @<input name="Discontinued" type="checkbox"
                          value="@item.Discontinued" 
                          @(item.Discontinued == true ? "checked" : null)
                          disabled="disabled"/>),
-                gridinstance.Column(columnName: "FakeDate", 
-                format: (item) => item.FakeDate.ToString("MMM dd, yyyy")),
+                gridinstance.Column(columnName: "Date", //If you don't give a header it will use column name 
+                format: (item) => item.Date.ToString("MMMM d, yyyy")),
                 gridinstance.Column(header: "",
                 format: @<text>
                     <a href="~/DBPages/WebGridDestination.cshtml?pid=@item.ProductID"
