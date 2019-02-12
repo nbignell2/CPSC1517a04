@@ -157,7 +157,7 @@
                     + "UnitsInStock = @5, "
                     + "UnitsOnOrder = @6, "
                     + "ReorderLevel = @7, "
-                    + "Discontinued = @8"
+                    + "Discontinued = @8 "
                     + "WHERE ProductID = @9";
 
                 var rowsaffected = db.Execute(updatecommand, productname,
@@ -286,7 +286,7 @@ else //for IsPost during initialization
                 <input type="checkbox" name="Discontinued" value="0" /><br /><br />
             }
         </div>
-        <div class="row>
+        <div class="row">
             <button type="submit" name="theButton" id="theUpdate" class="btn btn-primary" value="update">Update</button>&nbsp;&nbsp;&nbsp;
             <button type="submit" name="theButton" id="theDelete" class="btn btn-primary" value="delete">Delete</button>&nbsp;&nbsp;&nbsp;
             <button type="submit" name="theButton" id="theCancel" class="btn btn-primary" value="cancel">Cancel</button>
