@@ -288,9 +288,18 @@ else //for IsPost during initialization
         </div>
         <div class="row">
             <button type="submit" name="theButton" id="theUpdate" class="btn btn-primary" value="update">Update</button>&nbsp;&nbsp;&nbsp;
-            <button type="submit" name="theButton" id="theDelete" class="btn btn-primary" value="delete">Delete</button>&nbsp;&nbsp;&nbsp;
-            <button type="submit" name="theButton" id="theCancel" class="btn btn-primary" value="cancel">Cancel</button>
+            <button type="submit" name="theButton" id="theDelete" class="btn" value="delete">Delete</button>&nbsp;&nbsp;&nbsp;
+            <button type="submit" name="theButton" id="theCancel" class="btn" value="cancel">Cancel</button>
         </div>
-
+        @* this javascript ill allow for a confirmation dialog to appear
+            when a particular button is pressed (theDelete)*@
+        <script type="text/javascript">
+            document.getElementById("theDelete").onclick = ConfirmDelete;
+            function ConfirmDelete() {
+                return confirm("Are you sure you wish to delete @productname?");
+            }
+        </script>
+                
+                
     </form>
 </div>
