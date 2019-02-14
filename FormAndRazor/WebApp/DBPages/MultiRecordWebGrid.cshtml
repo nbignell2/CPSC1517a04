@@ -69,7 +69,7 @@
                 gridinstance.Column(header: "", canSort:false,
                 format: @<text>
                     <a href="~/DBPages/WebGridDestination.cshtml?pid=@item.ProductID"
-                       onclick="return confirm('Are you sure you wish to view the product details of @item.ProductName')">View</a>
+                       onclick='return confirm("Are you sure you wish to view the product details of @item.ProductName")'>View</a>
                         </text>)
                 ))
         
