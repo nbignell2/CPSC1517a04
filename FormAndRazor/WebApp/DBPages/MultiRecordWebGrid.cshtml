@@ -19,6 +19,7 @@
     var scalarcommand = "SELECT CategoryName "
                         + "FROM Categories "
                         + "WHERE CategoryID = @0";
+
     //QueryValue returns a single value (not a record) from the  query
     //this value will be used in titling the WebGrid display
     var categoryname = db.QueryValue(scalarcommand, categoryid);
