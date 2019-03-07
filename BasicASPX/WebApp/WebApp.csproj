@@ -155,41 +155,43 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="SamplePages\FirstPage.aspx" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\WebForms\DetailsView.js" />
-    <Content Include="Scripts\WebForms\Focus.js" />
-    <Content Include="Scripts\WebForms\GridView.js" />
-    <Content Include="Scripts\WebForms\Menu.js" />
-    <Content Include="Scripts\WebForms\MenuStandards.js" />
-    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjax.js" />
-    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxApplicationServices.js" />
-    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxComponentModel.js" />
-    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxCore.js" />
-    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxGlobalization.js" />
-    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxHistory.js" />
-    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxNetwork.js" />
-    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxSerialization.js" />
-    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxTimer.js" />
-    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxWebForms.js" />
-    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxWebServices.js" />
-    <Content Include="Scripts\WebForms\SmartNav.js" />
-    <Content Include="Scripts\WebForms\TreeView.js" />
-    <Content Include="Scripts\WebForms\WebForms.js" />
-    <Content Include="Scripts\WebForms\WebParts.js" />
-    <Content Include="Scripts\WebForms\WebUIValidation.js" />
+    <None Include="SamplePages\Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="SamplePages\BasicControls.aspx" />
+    <Content Include="SamplePages\HelloWorld.aspx" />
+    <Content Include="SamplePages\Scripts\bootstrap.js" />
+    <Content Include="SamplePages\Scripts\bootstrap.min.js" />
+    <Content Include="SamplePages\Scripts\jquery-3.3.1.js" />
+    <Content Include="SamplePages\Scripts\jquery-3.3.1.min.js" />
+    <Content Include="SamplePages\Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="SamplePages\Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="SamplePages\Scripts\modernizr-2.8.3.js" />
+    <Content Include="SamplePages\Scripts\WebForms\DetailsView.js" />
+    <Content Include="SamplePages\Scripts\WebForms\Focus.js" />
+    <Content Include="SamplePages\Scripts\WebForms\GridView.js" />
+    <Content Include="SamplePages\Scripts\WebForms\Menu.js" />
+    <Content Include="SamplePages\Scripts\WebForms\MenuStandards.js" />
+    <Content Include="SamplePages\Scripts\WebForms\MSAjax\MicrosoftAjax.js" />
+    <Content Include="SamplePages\Scripts\WebForms\MSAjax\MicrosoftAjaxApplicationServices.js" />
+    <Content Include="SamplePages\Scripts\WebForms\MSAjax\MicrosoftAjaxComponentModel.js" />
+    <Content Include="SamplePages\Scripts\WebForms\MSAjax\MicrosoftAjaxCore.js" />
+    <Content Include="SamplePages\Scripts\WebForms\MSAjax\MicrosoftAjaxGlobalization.js" />
+    <Content Include="SamplePages\Scripts\WebForms\MSAjax\MicrosoftAjaxHistory.js" />
+    <Content Include="SamplePages\Scripts\WebForms\MSAjax\MicrosoftAjaxNetwork.js" />
+    <Content Include="SamplePages\Scripts\WebForms\MSAjax\MicrosoftAjaxSerialization.js" />
+    <Content Include="SamplePages\Scripts\WebForms\MSAjax\MicrosoftAjaxTimer.js" />
+    <Content Include="SamplePages\Scripts\WebForms\MSAjax\MicrosoftAjaxWebForms.js" />
+    <Content Include="SamplePages\Scripts\WebForms\MSAjax\MicrosoftAjaxWebServices.js" />
+    <Content Include="SamplePages\Scripts\WebForms\SmartNav.js" />
+    <Content Include="SamplePages\Scripts\WebForms\TreeView.js" />
+    <Content Include="SamplePages\Scripts\WebForms\WebForms.js" />
+    <Content Include="SamplePages\Scripts\WebForms\WebParts.js" />
+    <Content Include="SamplePages\Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
+    <Content Include="Web.sitemap" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -219,12 +221,19 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SamplePages\FirstPage.aspx.cs">
-      <DependentUpon>FirstPage.aspx</DependentUpon>
+    <Compile Include="SamplePages\BasicControls.aspx.cs">
+      <DependentUpon>BasicControls.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SamplePages\FirstPage.aspx.designer.cs">
-      <DependentUpon>FirstPage.aspx</DependentUpon>
+    <Compile Include="SamplePages\BasicControls.aspx.designer.cs">
+      <DependentUpon>BasicControls.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SamplePages\HelloWorld.aspx.cs">
+      <DependentUpon>HelloWorld.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SamplePages\HelloWorld.aspx.designer.cs">
+      <DependentUpon>HelloWorld.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -253,8 +262,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
+    <Content Include="SamplePages\Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="SamplePages\Scripts\jquery-3.3.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

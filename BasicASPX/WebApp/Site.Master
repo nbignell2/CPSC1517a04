@@ -49,16 +49,36 @@
                     <a class="navbar-brand" runat="server" href="~/">Application name</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                   <%--This is the default menu that comes with your initial web project 
+                       To add a new menu item
+                         a) copy an li line
+                         b) change the hreft and text
+
+                       <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/SamplePages/FirstPage">Hello World</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
-                    </ul>
+                    </ul>--%>
+
+                    <%-- installing a menu using a web.sitemap file
+                        a) requires a asp.Menu control which is linked to the menu data source control
+                        b) requires a site map data source which contains your menu--%>
+                    <asp:Menu ID="SiteNav" runat="server"
+                         DataSourceID="SiteMapDS" Orientation="Horizontal"
+                         StaticDisplayLevels="1"
+                         StaticMenuStyle-CssClass="nav navbar-nav"
+                         StaticSelectedStyle-CssClass="active"
+                         DynamicMenuStyle-CssClass="dropdown-menu"
+                         IncludeStyleBlock="false" EnableTheming="false" EnableViewState="false">
+                    </asp:Menu>
+                    <asp:SiteMapDataSource ID="SiteMapDS" runat="server"
+                         ShowStartingNode="false"/>
                 </div>
             </div>
         </div>
         <div class="container body-content">
+            <br /><br />
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />

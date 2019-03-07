@@ -10,7 +10,7 @@
 namespace WebApp.SamplePages {
     
     
-    public partial class FirstPage {
+    public partial class HelloWorld {
         
         /// <summary>
         /// Label1 control.
