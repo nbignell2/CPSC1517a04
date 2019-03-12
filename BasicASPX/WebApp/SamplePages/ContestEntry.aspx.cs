@@ -32,12 +32,12 @@ namespace WebApp.SamplePages
                     //collect the data
                     //create/load a contest entry to the collection
                     //display the collection.
-                    Message.Text = "okay";
+                    Message.Text = "Thank you.";
 
                 }
                 else
                 {
-                    Message.Text = "You did not agreed to the contest terms. You entry is denied.";
+                    Message.Text = "Entry denied.";
                 }
             }
         }
