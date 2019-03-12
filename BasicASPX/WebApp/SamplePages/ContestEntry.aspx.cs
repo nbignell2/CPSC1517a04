@@ -37,7 +37,7 @@ namespace WebApp.SamplePages
                 }
                 else
                 {
-                    Message.Text = "Entry denied.";
+                    Message.Text = "Terms not agreed to. Entry denied.";
                 }
             }
         }

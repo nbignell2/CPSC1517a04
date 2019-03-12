@@ -16,6 +16,8 @@
 
         </div>
     </div>
+
+    <%-- Enter all validation controls in one area --%>
     <asp:RequiredFieldValidator ID="RequiredFieldFirstName" runat="server" 
         ErrorMessage="First Name is required." ControlToValidate="FirstName"
         Display="None" SetFocusOnError="true" ForeColor="Firebrick">
