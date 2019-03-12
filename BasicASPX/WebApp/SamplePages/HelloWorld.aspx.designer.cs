@@ -40,12 +40,12 @@ namespace WebApp.SamplePages {
         protected global::System.Web.UI.WebControls.Button PressMe;
         
         /// <summary>
-        /// OutputMessage control.
+        /// output control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal OutputMessage;
+        protected global::System.Web.UI.WebControls.Literal output;
     }
 }

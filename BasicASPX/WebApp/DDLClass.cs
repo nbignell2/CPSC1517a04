@@ -5,16 +5,18 @@ using System.Web;
 
 namespace WebApp
 {
-    public class DDL
+    public class DDLClass
     {
         public int ValueField { get; set; }
         public string DisplayField { get; set; }
-        public DDL()
+
+        public DDLClass()
         {
             //default
         }
-        public DDL(int valuefield, string displayfield)
+        public DDLClass(int valuefield, string displayfield)
         {
+            //greedy 
             ValueField = valuefield;
             DisplayField = displayfield;
         }

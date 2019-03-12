@@ -9,93 +9,108 @@ namespace WebApp.SamplePages
 {
     public partial class BasicControls : System.Web.UI.Page
     {
-        //this static variable is being used in this demo example
-        // to hang onto the dummy data
-        public static List<DDL> DataCollection;
+        //create a static List<T> that will hang around between
+        //    postings of the web page.
+        //This could also have been done using a ViewState variable
+        //Using a ViewState variable would require the user
+        //   to retrieve the data on each posting
+        public static List<DDLClass> DataCollection;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //this event method is executed each and every time
-            // this page is processed
-            //this event method is executed BEFORE any event method is processed
+            //Page_Load executes EACH and EVERY time their is a posting
+            //    to this page
+            //Page_Load is executed BEFORE and submit events
 
-            //this page is an excellent place to do page initialization of your controls.
-            //there is a property to test for post back of your
-            // page called Page.IsPostBack (Razor: IsPost)
+            //this method is an excellent place for do form initialization
+            //You can test your postings using Page.IsPostBack
+            //IsPostBack is the same item as IsPost in our Razor forms
+
             if (!Page.IsPostBack)
             {
-                //do FIRST page initialization processing
+                //this code will be executed only on the first pass 
+                //   to this page
 
-                //create an instance of the data collection list
-                DataCollection = new List<DDL>();
+                //create an instance for the static data collection
+                DataCollection = new List<DDLClass>();
 
-                //load the data collection with dummy data
-                //normally this data would come from your database
-                DataCollection.Add(new DDL(1, "COMP1008"));
-                DataCollection.Add(new DDL(2, "CPSC1517"));
-                DataCollection.Add(new DDL(3, "DMIT2018"));
-                DataCollection.Add(new DDL(4, "DMIT1508"));
+                //Add instances to this collection using the DDLClass
+                //   greedy constructor
+                DataCollection.Add(new DDLClass(1, "COMP1008"));
+                DataCollection.Add(new DDLClass(2, "CPSC1517"));
+                DataCollection.Add(new DDLClass(3, "DMIT2018"));
+                DataCollection.Add(new DDLClass(4, "DMIT1508"));
 
-                //to sort a list<T> use the method .Sort()
-                //(x,y) x and y represent any two instances in your list at any time
-                //x.field compared to y.field : ascending
-                //y.field compared to x.field : descending // => do the following
-                DataCollection.Sort((x, y) =>
-                 x.DisplayField.CompareTo(y.DisplayField));
+                //sorting a List<T>
+                //use the .Sort() method
+                //(x,y) this represents any two items in your list
+                //Compare x.Field to y.Field; ascending
+                //Compare y.Field to x.Field; descending
+                DataCollection.Sort((x,y) => x.DisplayField.CompareTo(y.DisplayField));
 
-                //setup the dropdownlist (radiobuttonlist, checkboxlist)
-                //a ) assign your data to the control
+                //Put the data collection into the dropdownlist
+                //a) assign the collection to the controls DataSource
                 CollectionList.DataSource = DataCollection;
 
-                //b ) assign the data list field names to
-                // the appropriate control properties
-                // i) .DataValueField this is the value of the select
-                // ii) .DataTextField this is the display of the select option
+                //b) assign the field names to the properties of the
+                //   dropdownlist for data association
+                //DataValueField represents the value of the line item
+                //DataTextField represents the display of the line item
                 CollectionList.DataValueField = "ValueField";
-                CollectionList.DataTextField = nameof(DDL.DisplayField);
+                CollectionList.DataTextField = nameof(DDLClass.DisplayField);
 
-                //c ) physically bind the data to the control for show
+                //c) bind the data to the web control
                 CollectionList.DataBind();
 
-                //what about a prompt?
-                //one can add a prompt to the start of the BOUND
-                // control list
-                //one will use the index 0 to position the prompt
-                CollectionList.Items.Insert(0, "Select...");
+                //Can one put a prompt on their dropdownlist control
+                //yes
+                CollectionList.Items.Insert(0, "select ...");
+
+
             }
+
         }
 
-        protected void SubMitButton_Click(object sender, EventArgs e)
+        protected void SubmitButtonChoice_Click(object sender, EventArgs e)
         {
-            //this method is executed when the submit button is pressed
-            //this method is concerned with the actions needed for the
-            //submit button
+            //to grab the contents of a control will depend on the
+            //   access technique of the control
+            //for a TextBox, Label,Literal use .Text
+            //for Lists(RadioButtonList, DropDownList) you may use
+            // a) .SelectedValue -> associate data value field
+            // b) .SelectedIndex -> the phyiscal index position in the list
+            // c) .SelectedItem -> associate data display field
+            //for a CheckBox use .Checked (true or false)
 
-            //to access the data of a control, you use the appropriate
-            // control (object) property (get,set) and access technique
+            //for the most part, all data from a control returns as 
+            //   a string except for boolean type controls
 
-            //for TextBox, Label, Literal use .Text
-            //for a list (dropdownlist, radiobuttonlist) use one of
-            // .SelectedIndex the physical location of the item in the list
-            // .SelectedValue the associate data value of the item in the list
-            // .SelectedItem the associated data display text of the item in the list
-            // for boolean controls (Radiobutton, checkbox) use .Checked
-            //most controls will use strings except for boolean controls
-
-            string submitchoice = SubMitButton.Text;
-
-            //sample validation
-            if (string.IsNullOrEmpty(submitchoice))
+            string submitchoice = TextBoxNumberChoice.Text;
+            int anum = 0;
+            if(string.IsNullOrEmpty(submitchoice))
             {
-                OutputMessage.Text = "Enter a course choice of 1 to 4";
+                MessageLabel.Text = "Enter a number from 1 to 4.";
+            }
+            else if(!int.TryParse(submitchoice, out anum))
+            {
+                MessageLabel.Text = "Entered value must be a number";
+            }
+            else if (anum > 4 || anum < 1)
+            {
+                MessageLabel.Text = "Enter a number from 1 to 4.";
             }
             else
             {
-                //set the radiobuttonlist using the entered data value
-                //property: .SelectedValue
+                //when positioning in a list it is BEST to position
+                //   using the SelectedValue unless you wish to
+                //   position in a specific physical location such as
+                //   your prompt line,  then use SelectedIndex
+
+                //SelectedValue expects a string value
+                //SelectedIndex expects a numeric value
                 RadioButtonListChoice.SelectedValue = submitchoice;
 
-                //set the checkbx to on if the choice was a programming language
+                //boolean control are set using true or false
                 if (submitchoice.Equals("2") || submitchoice.Equals("3"))
                 {
                     CheckBoxChoice.Checked = true;
@@ -105,22 +120,45 @@ namespace WebApp.SamplePages
                     CheckBoxChoice.Checked = false;
                 }
 
-                //position in the dropdownlist
-                //use the entered data value to position
-                //property: .SelectedValue
                 CollectionList.SelectedValue = submitchoice;
 
-                //demonstrate the 3 different access techniques for a list
-                // output will be to a label (appearance will be a read only)
+                //display label will show the various values
+                //obtained from a list using SelectedValue, SelectedIndex
+                //and SelectItem
                 DisplayReadOnly.Text = CollectionList.SelectedItem.Text
                     + " at index " + CollectionList.SelectedIndex
                     + " has a value of " + CollectionList.SelectedValue;
 
-
             }
         }
 
-
+        protected void SubmitList_Click(object sender, EventArgs e)
+        {
+            //the course choice will come from the dropdownlist
+            //the dropdownlist has a prompt in the 1st phyiscal line
+            //   of the dropdown (index = 0)
+            //ensure that the user has selected a course
+            if (CollectionList.SelectedIndex == 0)
+            {
+                MessageLabel.Text = "Select a course to view";
+            }
+            else
+            {
+                string submitchoice = CollectionList.SelectedValue;
+                TextBoxNumberChoice.Text = submitchoice;
+                RadioButtonListChoice.SelectedValue = submitchoice;
+                if (submitchoice.Equals("2") || submitchoice.Equals("3"))
+                {
+                    CheckBoxChoice.Checked = true;
+                }
+                else
+                {
+                    CheckBoxChoice.Checked = false;
+                }
+                DisplayReadOnly.Text = CollectionList.SelectedItem.Text
+                   + " at index " + CollectionList.SelectedIndex
+                   + " has a value of " + CollectionList.SelectedValue;
+            }
+        }
     }
-
 }
