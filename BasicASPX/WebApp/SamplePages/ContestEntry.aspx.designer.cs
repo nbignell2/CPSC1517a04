@@ -94,6 +94,15 @@ namespace WebApp.SamplePages {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionPostalCode;
         
         /// <summary>
+        /// CompareEmailAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator CompareEmailAddress;
+        
+        /// <summary>
         /// CompareCheckAnswer control.
         /// </summary>
         /// <remarks>

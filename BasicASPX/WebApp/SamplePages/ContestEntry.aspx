@@ -27,7 +27,7 @@
         Display="None" SetFocusOnError="true" ForeColor="Firebrick">
     </asp:RequiredFieldValidator>
         <asp:RequiredFieldValidator ID="RequiredFieldStreetAddress1" runat="server" 
-        ErrorMessage="Street Address1 is required." ControlToValidate="StreetAddress2"
+        ErrorMessage="Street Address1 is required." ControlToValidate="StreetAddress1"
         Display="None" SetFocusOnError="true" ForeColor="Firebrick">
     </asp:RequiredFieldValidator>
         <asp:RequiredFieldValidator ID="RequiredFieldCity" runat="server" 
@@ -56,11 +56,15 @@
     </asp:RangeValidator>
 
     <asp:RegularExpressionValidator ID="RegularExpressionPostalCode" runat="server" 
-        ErrorMessage="Invalid postal code." ControlToValidate="PostalCode"
+        ErrorMessage="Invalid postal code format [AnAnAn]." ControlToValidate="PostalCode"
          SetFocusOnError="true" Display="None" ForeColor="Firebrick"
-         ValidationExpression="[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]"
-        >
+         ValidationExpression="[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]">
         </asp:RegularExpressionValidator>
+
+       <asp:CompareValidator ID="CompareEmailAddress" runat="server" 
+            ErrorMessage="Invalid Email" ControlToValidate="EmailAddress" Display="None"
+             SetFocusOnError="true" ForeColor="Firebrick"
+            Type="String" Operator="DataTypeCheck" ></asp:CompareValidator>
 
         <%-- sample of a datatype check using Compare --%>
 <%--        <asp:CompareValidator ID="CompareCheckAnswer" runat="server" 
