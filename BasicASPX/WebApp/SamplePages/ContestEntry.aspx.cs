@@ -55,5 +55,10 @@ namespace WebApp.SamplePages
             Terms.Checked = false;
             CheckAnswer.Text = "";
         }
+
+        protected void FirstName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
