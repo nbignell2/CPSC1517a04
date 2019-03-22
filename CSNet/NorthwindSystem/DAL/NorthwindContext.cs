@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NorthwindSystem.Data
+namespace NorthwindSystem.DAL
 {
-    public class Class1
+    class NorthwindContext
     {
     }
 }
