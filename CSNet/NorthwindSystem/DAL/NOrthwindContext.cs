@@ -37,5 +37,6 @@ namespace NorthwindSystem.DAL
         //   sql table 
         // <T> is your class in the .Data project
         public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

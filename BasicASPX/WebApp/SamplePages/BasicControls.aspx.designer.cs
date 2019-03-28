@@ -13,22 +13,22 @@ namespace WebApp.SamplePages {
     public partial class BasicControls {
         
         /// <summary>
-        /// TextBoxNumberChoice control.
+        /// TextBoxNumericChoice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxNumberChoice;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxNumericChoice;
         
         /// <summary>
-        /// SubmitButtonChoice control.
+        /// SubMitButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SubmitButtonChoice;
+        protected global::System.Web.UI.WebControls.Button SubMitButton;
         
         /// <summary>
         /// Label1 control.
@@ -103,21 +103,21 @@ namespace WebApp.SamplePages {
         protected global::System.Web.UI.WebControls.DropDownList CollectionList;
         
         /// <summary>
-        /// SubmitList control.
+        /// ListSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SubmitList;
+        protected global::System.Web.UI.WebControls.Button ListSubmit;
         
         /// <summary>
-        /// MessageLabel control.
+        /// OutputMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label MessageLabel;
+        protected global::System.Web.UI.WebControls.Label OutputMessage;
     }
 }

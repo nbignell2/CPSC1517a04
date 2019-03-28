@@ -10,7 +10,7 @@
 namespace WebApp.SamplePages {
     
     
-    public partial class HelloWorld {
+    public partial class SqlProcQueries {
         
         /// <summary>
         /// Label1 control.
@@ -22,30 +22,48 @@ namespace WebApp.SamplePages {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// yourname control.
+        /// CategoryList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox yourname;
+        protected global::System.Web.UI.WebControls.DropDownList CategoryList;
         
         /// <summary>
-        /// PressMe control.
+        /// Submit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button PressMe;
+        protected global::System.Web.UI.WebControls.Button Submit;
         
         /// <summary>
-        /// OutputMessage control.
+        /// Clear control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal OutputMessage;
+        protected global::System.Web.UI.WebControls.Button Clear;
+        
+        /// <summary>
+        /// CategoryProductList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView CategoryProductList;
+        
+        /// <summary>
+        /// MessageLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label MessageLabel;
     }
 }
