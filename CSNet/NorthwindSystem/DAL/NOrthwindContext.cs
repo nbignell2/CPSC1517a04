@@ -4,39 +4,42 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//this class needs to have access to ADO.Net EntityFrameWork
-//the Nuget package EntryFramework has already be added to this project
-//this project also needs the assembly System.Data.Entity
-//this project will need using clauses that point to
-//   a) the System.Data.Entity namespace
-//   b) your data project namespace
-
 #region Additional Namespaces
-using System.Data.Entity;
-using NorthwindSystem.Data;
+using System.Data.Entity; //for the EntityFramework ADO.Net stuff
+using NorthwindSystem.Data;  // for the <T> definitions
 #endregion
+
+//this class needs to have access to ADO.Net in EntityFramework
+//the NuGet package Manager will have the EntityFramework, install
+//this project needs the assembly System.Data.Entry
+//this project needs a reference to your .Data project
+//this project needs to use the following namespaces
+//  a) System.Data.Entity
+//  b) .Data project namespace
 
 namespace NorthwindSystem.DAL
 {
-    //the class acces internal restrict calls to this class
-    //   to methods within this project
-    //this context class needs to inherit DbContext from
-    //   EntityFramework
+    //the class access is restricted to requests from within the
+    //   library the class exists in: internal
+    //the class inherits (ties into EntityFramework) the class DbContext
 
     internal class NorthwindContext:DbContext
     {
-        //setup your class defualt contructor to supply your 
-        //   connection string name to the DbContext inherit
-        //   class
+        //setup your class default constructor to supply
+        //   your connection string name to the DbContext
+        //   inherited (base) class
         public NorthwindContext():base("NWDB")
         {
 
         }
-
-        //create a Entityframework DbSet<T> for each mapped
-        //   sql table 
+        //create an EntityFramework DbSet<T> for each
+        //   mapped sql table
         // <T> is your class in the .Data project
+        //this is a property
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<Territory> Territories { get; set; }
     }
 }

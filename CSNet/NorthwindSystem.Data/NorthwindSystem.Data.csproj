@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7C495435-7D05-4DA1-A7F0-F6939D2E4D34}</ProjectGuid>
+    <ProjectGuid>{B477CB71-9AA3-499A-B19F-642C731462E0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NorthwindSystem.Data</RootNamespace>
@@ -44,6 +44,11 @@
     <Compile Include="Category.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Region.cs" />
+    <Compile Include="Supplier.cs" />
+    <Compile Include="Territory.cs" />
+    <Compile Include="Views\EmployeeOfTerritory.cs" />
+    <Compile Include="Views\SupplierCategories.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
