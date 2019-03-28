@@ -104,5 +104,54 @@ namespace WebApp.SamplePages
             CategoryProductList.DataSource = null;
             CategoryProductList.DataBind();
         }
+
+        protected void CategoryProductList_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            //The developer must code this event method when they install paging
+            //this method will do two things:
+            // a) set the controls page index property to the data "page" of the
+            // data collection
+            // the new page index is located in the e parameter of this method
+            CategoryProductList.PageIndex = e.NewPageIndex;
+
+            //b) refresh the data collection for the control
+            // re issue the call to the databsse for data
+            // assign data results to control 
+            // bind the results
+            Submit_Click(sender, new EventArgs());
+        }
+
+        protected void CategoryProductList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //access the data on the gridview selected row
+            // the rows of a gridview are in a collection referenced by .Rows
+            //the row index of the selected gridview row can be referenced by 
+            // .SelectedUbdex
+            //personal style: short form to GridViewRow pointer
+            GridViewRow agvrow = CategoryProductList.Rows[CategoryProductList.SelectedIndex];
+
+            //accessing the data on a gridview cell is dependent on how the 
+            // cell was setup
+            // we are using a TemplateField with a web control inside the ItemTemplate
+            //syntax:
+            // (agrvrow.FindControl("controlid") as controltype).controltypeaccess
+            // agrvrow: points to the selection gridview row
+            // .FindControl("controlid") looks for a control on the row by the ID name of
+            //  controlid
+            // as controltype : identifies the type of control
+            // .controltypeaccess: how the type of control is accessed for data
+            string productid = (agvrow.FindControl("ProductID") as Label).Text;
+            string productname = (agvrow.FindControl("ProductName") as Label).Text;
+            string discontinued = "";
+            if((agvrow.FindControl("Discontinued") as CheckBox).Checked)
+            {
+                discontinued = "discontinued";
+            }
+            else
+            {
+                discontinued = "available";
+            }
+            MessageLabel.Text = productname + " (" + productid + ") is " + discontinued;
+        }
     }
 }

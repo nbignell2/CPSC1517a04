@@ -10,7 +10,7 @@
                </td>
             </tr>
             <tr>
-                <td align="center">
+                <td align="center" style="height: 29px">
                     <asp:Button ID="Submit" runat="server" Text="Submit" OnClick="Submit_Click"   />
 &nbsp;
                     <asp:Button ID="Clear" runat="server" Text="Clear"
@@ -23,7 +23,47 @@
             </tr>
             <tr>
                 <td align="center">
-                    <asp:GridView ID="CategoryProductList" runat="server"></asp:GridView>
+                    <asp:GridView ID="CategoryProductList" runat="server" AutoGenerateColumns="False" AllowPaging="True" AllowSorting="True" BorderColor="Black" BorderStyle="Groove" CellPadding="5" CellSpacing="5" GridLines="None" OnPageIndexChanging="CategoryProductList_PageIndexChanging" PageSize="3" OnSelectedIndexChanged="CategoryProductList_SelectedIndexChanged">
+                        <AlternatingRowStyle BackColor="#CCCCCC" BorderColor="#66FFFF" BorderStyle="None" />
+                        <Columns>
+                              <asp:TemplateField Visible="False">
+                                <ItemTemplate>
+                                    <asp:Label ID="ProductID" runat="server" Text='<%# Eval("ProductID") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Product">
+                                <ItemTemplate>
+                                    <asp:Label ID="ProductName" runat="server" Text='<%# Eval("ProductName") %>'></asp:Label>
+                                </ItemTemplate>
+                                <HeaderStyle BackColor="#CCFFFF" BorderColor="Black" BorderStyle="Double" Font-Names="Microsoft New Tai Lue" HorizontalAlign="Center"/>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Price ($)">
+                                <ItemTemplate>
+                                    <asp:Label ID="UnitPrice" runat="server" Text='<%# string.Format("{0:0.00}",Eval("UnitPrice")) %>'></asp:Label> <%-- Can format date --%>
+                                </ItemTemplate>
+                                <HeaderStyle BackColor="#CCFFFF" BorderColor="Black" BorderStyle="Double" Font-Names="Microsoft New Tai Lue" HorizontalAlign="Center" />
+                                <ItemStyle HorizontalAlign="Right" />
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="QoH">
+                                <ItemTemplate>
+                                    <asp:Label ID="UnitsInStock" runat="server" Text='<%# Eval("UnitsInStock") %>'></asp:Label>
+                                </ItemTemplate>
+                                <HeaderStyle BackColor="#CCFFFF" BorderColor="Black" BorderStyle="Double" Font-Names="Microsoft New Tai Lue"  HorizontalAlign="Center" />
+                                <ItemStyle HorizontalAlign="Right" />
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Disc">
+                                <ItemTemplate>
+                                    <asp:CheckBox ID="Discontinued" runat="server" Checked='<%# Eval("Discontinued") %>'></asp:CheckBox>
+                                </ItemTemplate>
+                                <HeaderStyle BackColor="#CCFFFF" BorderColor="Black" BorderStyle="Double" Font-Names="Microsoft New Tai Lue" HorizontalAlign="Center" />
+                                <ItemStyle HorizontalAlign="Center" />
+                            </asp:TemplateField>
+                              <asp:CommandField CausesValidation="False" SelectText="View" ShowSelectButton="True">
+                              <HeaderStyle BackColor="#CCFFFF" Font-Underline="True" />
+                              </asp:CommandField>
+                        </Columns>
+                        <PagerSettings FirstPageText="Start" LastPageText="End" Mode="NumericFirstLast" PageButtonCount="3" />
+                    </asp:GridView>
                 </td>
 
             </tr>
