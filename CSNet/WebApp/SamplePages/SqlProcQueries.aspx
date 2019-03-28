@@ -10,7 +10,7 @@
                </td>
             </tr>
             <tr>
-                <td align="center">
+                <td align="center" style="height: 29px">
                     <asp:Button ID="Submit" runat="server" Text="Submit" OnClick="Submit_Click"   />
 &nbsp;
                     <asp:Button ID="Clear" runat="server" Text="Clear"
