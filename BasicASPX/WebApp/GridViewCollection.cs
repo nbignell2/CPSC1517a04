@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebApp
 {
-    public class GridViewData
+    public class GridViewCollection
     {
         public string FullName { get; set; }
         public string EmailAddress { get; set; }
@@ -13,12 +13,9 @@ namespace WebApp
         public string FullorPartTime { get; set; }
         public string Jobs { get; set; }
 
-        public GridViewData()
-        {
-
-        }
-        public GridViewData(string fullname, string emailaddress,
-            string phonenumber, string fullorparttime, string jobs)
+        public GridViewCollection(string fullname,
+            string emailaddress, string phonenumber,
+            string fullorparttime, string jobs)
         {
             FullName = fullname;
             EmailAddress = emailaddress;

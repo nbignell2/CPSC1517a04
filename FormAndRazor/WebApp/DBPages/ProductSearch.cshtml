@@ -1,7 +1,7 @@
 ﻿@{
     Page.Title = "Product Search";
     Layout = "~/_Layout.cshtml";
-
+  
     var productsearch = Request.Form["ProductSearch"];
 
     var db = Database.Open("NWDB");
@@ -11,7 +11,7 @@
                         + "FROM Products "
                         + "WHERE ProductName like @0 "
                         + "ORDER BY ProductName";
-
+   
 }
 @section banner{
     <h1>Product Search</h1>

@@ -1,4 +1,6 @@
 ﻿@{
+    /**/
+
     Page.Title = "Product Edit";
     Layout = "~/_Layout.cshtml";
 
@@ -65,30 +67,30 @@
 {
     if (thebutton.Equals("cancel"))
     {
-        //A. could redirect the user to the search page via a message
-        //B. could reset the data to the current record on the database
-        //C. could empty the data fields
-        // You should in all cases blank out the primary key
+        //a) could redirect the user to the search page via message
+        //b) reset the data to the current record on the database
+        //c) empty the data fields
+        // you should in all cases blank out the primary key field
         productid = "";
         <p class="col-sm-12 text-center">
             <span style="color:cadetblue">
                 <strong>
-                    Action cancelled, look up another product on the
-                    <a href="~/DBPages/ProductSearch.cshtml">search page</a>
+                    Action cancelled. Look up another product on the
+                    <a href="~/DBPages/ProductSearch.cshtml">search page</a>.
                 </strong>
             </span>
         </p>
     }
     else if (thebutton.Equals("delete"))
     {
-        //Check to see if there is a primary key to work with
+        //check to see if there is a primary key to work with
         if (productid == "")
         {
             <p class="col-sm-12 text-center">
-                <span style="color:cadetblue">
+                <span style="color:firebrick">
                     <strong>
-                        Action cancelled, look up another product on the
-                        <a href="~/DBPages/ProductSearch.cshtml">search page</a>
+                        Look up another product on the
+                        <a href="~/DBPages/ProductSearch.cshtml">search page</a>.
                     </strong>
                 </span>
             </p>
@@ -103,43 +105,47 @@
                 {
                     <p>
                         <span style="color:cadetblue">
-                            Product not found. Product not removed.
-                            Look up another product on
-                            <a href="~/DBPages/ProductSearch.cshtml">search page</a>
+                            Product was not found. Product not removed.
+                            Look up another product on the
+                            <a href="~/DBPages/ProductSearch.cshtml">search   page</a>
                         </span>
                     </p>
                     productid = "";
-                    // optionally you could delete the data from the rest of the fields
+                    //optionally you could delete the data from the
+                    //   rest of the fields.
                 }
                 else
                 {
                     <p>
                         <span style="color:green">
                             Product was removed.
-                            Look up another product on
-                            <a href="~/DBPages/ProductSearch.cshtml">search page</a>
+                            Look up another product on the
+                            <a href="~/DBPages/ProductSearch.cshtml">search   page</a>
                         </span>
                     </p>
+                    productid = "";
                 }
-
-
             }
             catch (Exception ex)
             {
-                <p><span style="color:firebrick">@ex.Message</span></p>
+                <p>
+                    <span style="color:firebrick">
+                        @ex.Message
+                    </span>
+                </p>
             }
         }
     }
     else
     {
-        //Check to see if there is a primary key to work with
+        //check to see if there is a primary key to work with
         if (productid == "")
         {
             <p class="col-sm-12 text-center">
-                <span style="color:cadetblue">
+                <span style="color:firebrick">
                     <strong>
-                        Action cancelled, look up another product on the
-                        <a href="~/DBPages/ProductSearch.cshtml">search page</a>
+                        Look up another product on the
+                        <a href="~/DBPages/ProductSearch.cshtml">search page</a>.
                     </strong>
                 </span>
             </p>
@@ -159,8 +165,8 @@
                     + "ReorderLevel = @7, "
                     + "Discontinued = @8 "
                     + "WHERE ProductID = @9";
-
-                var rowsaffected = db.Execute(updatecommand, productname,
+                var rowsaffected = db.Execute(updatecommand,
+                    productname,
                     supplierid.Equals("0") ? null : supplierid,
                     categoryid.Equals("0") ? null : categoryid,
                     string.IsNullOrEmpty(quantityperunit) ? null : quantityperunit,
@@ -174,34 +180,36 @@
                 {
                     <p>
                         <span style="color:cadetblue">
-                            Product not found. Product not updated.
-                            Look up another product on
-                            <a href="~/DBPages/ProductSearch.cshtml">search page</a>
+                            Product was not found. Product not updated.
+                            Look up another product on the
+                            <a href="~/DBPages/ProductSearch.cshtml">search   page</a>
                         </span>
                     </p>
                     productid = "";
-                    // optionally you could delete the data from the rest of the fields
+                    //optionally you could delete the data from the
+                    //   rest of the fields.
                 }
                 else
                 {
                     <p>
                         <span style="color:green">
                             Product was updated.
-                            Look up another product on
-                            <a href="~/DBPages/ProductSearch.cshtml">search page</a>
                         </span>
                     </p>
                 }
-
-
             }
             catch (Exception ex)
             {
-                <p><span style="color:firebrick">@ex.Message</span></p>
+                <p>
+                    <span style="color:firebrick">
+                        @ex.Message
+                    </span>
+                </p>
             }
         }
     }
 }
+
 else //for IsPost during initialization
 {
     //if this page is being shown for the "first time"
@@ -228,7 +236,7 @@ else //for IsPost during initialization
 }
 <div class="form-group">
 
-    <form id="theForm" action="" method="post">
+    <form id="theForm" method="post">
         <div class="col-sm-6 text-right">
             <label id="ProductID">Product ID</label><br />
             <label id="ProductName">Product Name</label><br />
@@ -291,15 +299,14 @@ else //for IsPost during initialization
             <button type="submit" name="theButton" id="theDelete" class="btn" value="delete">Delete</button>&nbsp;&nbsp;&nbsp;
             <button type="submit" name="theButton" id="theCancel" class="btn" value="cancel">Cancel</button>
         </div>
-        @* this javascript ill allow for a confirmation dialog to appear
+    </form>
+        @* this javascript will allow for a confirmation dialog to appear
             when a particular button is pressed (theDelete)*@
         <script type="text/javascript">
             document.getElementById("theDelete").onclick = ConfirmDelete;
             function ConfirmDelete() {
-                return confirm("Are you sure you wish to delete @productname?");
+                return confirm("Are you sure you wish to remove @productname?");
             }
         </script>
-                
-                
-    </form>
+    
 </div>

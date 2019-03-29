@@ -8,18 +8,17 @@
     var categoryid = Request.QueryString["cid"];
 
     //check that a value was passed
-
     if (string.IsNullOrEmpty(categoryid))
     {
         Response.Redirect("MultiRecordQuery.cshtml");
     }
+
 
     //query the database using the passed value
     var db = Database.Open("NWDB");
     var scalarcommand = "SELECT CategoryName "
                         + "FROM Categories "
                         + "WHERE CategoryID = @0";
-
     //QueryValue returns a single value (not a record) from the  query
     //this value will be used in titling the WebGrid display
     var categoryname = db.QueryValue(scalarcommand, categoryid);
@@ -32,11 +31,15 @@
 
     //create an instance of WebGrid
     //notice the collection is passed at the time of instantiation
-    //to alter your page size use the attribute rowsPerPage
+    //to alter the default 10 rows/page use the rowsPerPage attribute
     var gridinstance = new WebGrid(results, rowsPerPage:5);
 
 }
 
+@section head{
+
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
+}
 @section banner{
     <h1>DataBase: WebGrid Query</h1>
 }
@@ -44,37 +47,34 @@
 <div class="row">
     <div class="col-md-12">
         <span style="font-size:x-large"><strong>Products for @categoryname</strong></span>
-       
-            <!--Customize the WebGrid instance display-->
-            @gridinstance.GetHtml(
-             tableStyle: "table table-bordered table-striped table-hover",
-             mode: WebGridPagerModes.All,
-             firstText: "Start",
-             lastText: "End",
-             //If you change one column, you have to change all. Does not have to be in order.
-            columns: gridinstance.Columns(
-                gridinstance.Column(columnName: "ProductID", header: "ID",
-                canSort:true),
-                gridinstance.Column(columnName: "ProductName", header: "Product"),
-                gridinstance.Column(columnName: "UnitPrice", header: "Amount",
-                 format: (item) => item.UnitPrice.ToString("C")),//place holder has unique name of item, => forthisinstance
-                gridinstance.Column(columnName: "Discontinued", header: "Disc",
-                canSort:false,
+        <!--Display the WebGrid instance in a customized display
+               default webgrid is   xxxxx.GetHtml()-->
+        @gridinstance.GetHtml(
+       tableStyle: "table table-bordered table-striped table-hover",
+       mode: WebGridPagerModes.All,
+       firstText: "Start",
+       lastText: "End",
+       columns: gridinstance.Columns(
+           gridinstance.Column(columnName: "ProductID", header: "ID"),
+           gridinstance.Column(columnName: "ProductName", header: "Product"),
+           gridinstance.Column(columnName: "UnitPrice", header: "Price ($)",
+                format: (item) => item.UnitPrice.ToString("0.00")),
+           gridinstance.Column(columnName: "Date", canSort:false,
+                format: (item) => item.Date.ToString("MMM dd, yyyy")),
+           gridinstance.Column(columnName: "Discontinued", header: "Disc", canSort:false,
                 format: @<input id="Discontinued" name="Discontinued" type="checkbox"
-                         value="@item.Discontinued" 
-                         @(item.Discontinued == true ? "checked" : null)
-                         disabled="disabled"/>),
-                gridinstance.Column(columnName: "Date",
-                canSort:false,//If you don't give a header it will use column name 
-                format: (item) => item.Date.ToString("MMMM d, yyyy")),
-                gridinstance.Column(header: "", canSort:false,
+                                value="@item.Discontinued" disabled="disabled"
+                                @(item.Discontinued == true ? "checked" : null)/>),
+           gridinstance.Column(header: "", 
                 format: @<text>
-                    <a href="~/DBPages/WebGridDestination.cshtml?pid=@item.ProductID"
-                       onclick='return confirm("Are you sure you wish to view the product details of @item.ProductName")'>View</a>
+                        <a href="~/DBPages/WebGridDestination.cshtml?pid=@item.ProductID"
+                           onclick='return confirm("Are you sure you want to view @item.ProductName ?")'>View</a>
                         </text>)
-                ))
-        
+           ))
     </div>
 </div>
 
+@section footer{
+    &copy; CPSC1517 Nait 2019, all rights reserved
+}
 

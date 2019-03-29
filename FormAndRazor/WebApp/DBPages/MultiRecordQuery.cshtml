@@ -19,8 +19,14 @@
     var ddlcommand = "SELECT CategoryID, CategoryName "
                     + "FROM Categories "
                     + "ORDER BY CategoryName";
+    //the command will return 0, 1 or more records
+    //therefore use .Query()
     var ddlResults = db.Query(ddlcommand);
 
+    @section head{
+
+        <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
+    }
 
 }
 @section banner{
@@ -42,19 +48,19 @@
 
         //query the database using the choice from the dropdown list
 
-        var querycommand = "SELECT ProductId "
-                           + "FROM Products "
-                           + "WHERE CategoryID = @0";
-
+        //the database is already attached see above
+        //create command
+        var querycommand = "SELECT ProductID "
+                         + "FROM Products "
+                         + "WHERE CategoryID = @0";
+        //execute using .Query() fkey lookup 1:m
         var results = db.Query(querycommand, categorylist);
 
         //check the results of the query
-        //QuerySingle no results test for null
-        //Query no results test using .Count() == 0
         if (results.Count() == 0)
         {
             //empty results code here
-            <p><span style="color:blue">No products found for the requested category. Select a different category.</span></p>
+            <p><span style="color:blue">No products found for your select category. Select a different category.</span></p>
         }
         else
         {
@@ -67,7 +73,8 @@
             //multiple arguments are separated by a &
             //this uses the Get posting so the value will appear
             //   on the url
-            Response.Redirect("MultiRecordWebGrid.cshtml?cid=" + categorylist);
+            Response.Redirect("MultiRecordWebGrid.cshtml?cid=" +
+                categorylist);
         }
     }
 }
@@ -75,7 +82,7 @@
 <form id="theform" method="post">
     <div class="row">
         <div class="col-md-offset-5">
-            <label for="categorylist">Select a category:</label><br />
+            <label for="categoryarg">Select a category:</label><br />
             @*loop through the collection of records in ddlResults
                 create a line in the ddl for each item in ddlResults
                 referencing of the data items on each row
@@ -100,5 +107,7 @@
         </div>
     </div>
 </form>
-
+@section footer{
+    &copy; CPSC1517 Nait 2019, all rights reserved
+}
 

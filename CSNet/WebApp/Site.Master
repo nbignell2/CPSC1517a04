@@ -14,7 +14,7 @@
 
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
+    <link href="Content/myTabsSheet.css" rel="stylesheet" />
 </head>
 <body>
     <form runat="server">
@@ -53,6 +53,9 @@
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
+                        <li><a runat="server" href="~/SamplePages/SimpleQueries">Simple Queries</a></li>
+                         <li><a runat="server" href="~/SamplePages/SqlProcQueries">Proc Queries</a></li>
+                        <li><a runat="server" href="~/SamplePages/FilterSearches">Filter Searches</a></li>
                     </ul>
                 </div>
             </div>

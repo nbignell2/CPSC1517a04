@@ -1,63 +1,76 @@
 ﻿@{
+    //these pages process PHYSICALLY from TOP to BOTTOM
+
     Layout = "~/_Layout.cshtml";
     Page.Title = "TextBoxes";
 
-    //the processing of this page is PHYSICALLY done from TOP to BOTTOM
+    // gather the data from the form
+    //data will come in as strings
+    //if the .Form field does NOT exist, null is returned
+    var leftside = Request.Form["leftinput"];
+    var rightside = Request.Form["rightinput"];
+    var thebutton = Request.Form["formbutton"];  //button has a value parameter
+}
+@section head{
 
-    //capture the incoming "post" method data
-    //all data coming in will be strings
-    //if a form control does NOT exist, the value null is returned
-    //if a form control does exist, then the associated data is returned
-    //for a textbox control, the data is the entered data
-    //for a form submit button, the data is the value assigned to the value parameter
-    var leftside = Request.Form["inputleft"];
-    var rightside = Request.Form["inputright"];
-    var thebutton = Request.Form["formbutton"];
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
 }
+
 @section banner{
-    <h1>TextBoxes</h1>
+    <h1>TextBoxes for Razor Form Samples</h1>
 }
-<!-- this html will appear in the RenderBody of the layout page-->
+<!-- content body-->
 @if (IsPost)
 {
-    //Which form button was pressed
-    if (thebutton.Equals("left"))
+    if (thebutton.Equals("reset"))
     {
-        <p>Your name is @leftside.</p>
-    }
-    else if (thebutton.Equals("right"))
-    {
-        <p>Your favourite colour is @rightside.</p>
+        leftside = "";
+        rightside = "";
     }
     else
     {
-        leftside = null;
-        rightside = null;
+        //vaildation of data coming in
+        if (string.IsNullOrEmpty(leftside) ||
+            string.IsNullOrEmpty(rightside))
+        {
+            <p>Enter data in both input fields (name and colour).</p>
+        }
+        else
+        {
+            if (thebutton.Equals("leftinput"))
+            {
+                <p>Hello. Your name is @leftside . </p>
+            }
+            else
+            {
+                <p>@leftside , your favourite colour is @rightside . </p>
+            }
+        }
     }
 }
 else
 {
-    <p>You have not yet sent this form back. IsPost is false</p>
+    <p>this form is in initialization</p>
 }
 <form id="theform" method="post">
     <div class="row">
         <div class="col-md-6">
-            <label for="inputleft">Left</label>
-            <input type="text" id="inputleft" name="inputleft"
+            <label for="leftinput">Your Name:</label>
+            <input type="text" id="leftinput" name="leftinput"
                    placeholder="enter your name"
                    value="@leftside" />
             <button type="submit" id="formbutton" name="formbutton"
-                    class="btn" value="left">
+                    class="btn" value="leftinput">
                 Press Left
             </button>
         </div>
         <div class="col-md-6">
-            <label for="inputright">Right</label>
-            <input type="text" id="inputright" name="inputright"
-                   placeholder="enter your favourite color"
+            <label for="rightinput">Your Favourite Colour:</label>
+            <input type="text" id="rightinput" name="rightinput"
+                   placeholder="enter your colour"
                    value="@rightside" />
             <button type="submit" id="formbutton" name="formbutton"
-                    class="btn" value="right">
+                    class="btn" value="rightinput">
                 Press Right
             </button>
         </div>
@@ -66,8 +79,15 @@ else
         <div class="col-md-offset-5">
             <button type="submit" id="formbutton" name="formbutton"
                     class="btn" value="reset">
-                Reset on Server
+                Reset
             </button>
         </div>
     </div>
 </form>
+
+
+
+@section footer{
+    &copy; CPSC1517 Nait, all rights reservered
+}
+

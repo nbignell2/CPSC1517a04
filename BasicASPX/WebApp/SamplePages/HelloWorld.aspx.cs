@@ -11,15 +11,14 @@ namespace WebApp.SamplePages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //this method is execute on EACH and
-            //   EVERY pass of the page
-            //this method is execute BEFORE ANY
-            //   of your event methods
+            //this method will execute EACH and EVERY time
+            //     this page is processed
+            //this method will execute BEFORE ANY event method
         }
 
         protected void PressMe_Click(object sender, EventArgs e)
         {
-            output.Text = "hello there " + yourname.Text;
+            OutputMessage.Text = "Hello " + yourname.Text;
         }
     }
 }

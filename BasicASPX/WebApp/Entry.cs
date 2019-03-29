@@ -5,13 +5,15 @@ using System.Web;
 
 namespace WebApp
 {
-    public class ContestData
+    public class Entry
     {
         private string _StreetAddress2;
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string StreetAddress1 { get; set; }
-        public string StreetAddress2 {
+        public string StreetAddress2
+        {
             get
             {
                 return _StreetAddress2;
@@ -24,16 +26,16 @@ namespace WebApp
         public string City { get; set; }
         public string Province { get; set; }
         public string PostalCode { get; set; }
-        public string Email { get; set; }
+        public string EmailAddress { get; set; }
 
-        public ContestData()
+        public Entry()
         {
 
         }
 
-        public ContestData(string firstname, string lastname, string streetaddress1,
-            string streetaddress2, string city, string province, string postalcode,
-            string email)
+        public Entry(string firstname, string lastname, string streetaddress1,
+            string streetaddress2, string city, string province,
+            string postalcode, string emailaddress)
         {
             FirstName = firstname;
             LastName = lastname;
@@ -42,7 +44,7 @@ namespace WebApp
             City = city;
             Province = province;
             PostalCode = postalcode;
-            Email = email;
+            EmailAddress = emailaddress;
         }
     }
 }

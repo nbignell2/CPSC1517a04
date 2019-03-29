@@ -8,21 +8,20 @@ namespace OOPsReview
 {
     public class Turn
     {
-        public int Player1Roll { get; set; }
-        public int Player2Roll { get; set; }
+        public int Player1 { get; set; }
+        public int Player2 { get; set; }
+        //optionally, for practice only add constructors
 
-        //optionally for practice only add constructors
-        //Default
         public Turn()
         {
 
         }
 
-        //Greedy constructor
         public Turn(int player1, int player2)
         {
-            Player1Roll = player1;
-            Player2Roll = player2;
+            Player1 = player1;
+            Player2 = player2;
         }
+
     }
 }

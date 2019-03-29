@@ -1,86 +1,92 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
-    Page.Title = "DB - Single Query";
+    Page.Title = "Single Query";
 
     var searcharg = Request.Form["searcharg"];
-    var thebutton = Request.Form["formButton"];
     var regionid = "";
     var description = "";
+    var thebutton = Request.Form["formbutton"];
 
-    //remember, on the 1st page pass, the form has NOT been displayed
-    //searcharg will be null
-    //looking up a sql table by primary key using a value of null
-    //     will not be successful
+    //remember the 1st pass of the page, searcharg will
+    //   be null BUT for the db query it needs to be a
+    //   number
     if (string.IsNullOrEmpty(searcharg))
     {
         searcharg = "0";
     }
 
-    //connect to your database "pipeline"
+    //open a connection to the database
+    //use the connection string name attribute value
     var db = Database.Open("NWDB");
 
-    //create the command to be executed on the database 
-    //this command can be coded over multiple phyiscal line as a concatenation
-    //values which will be passed with the command are coded with placeholders
-    //a placeholder is @n where n is an index value
-    //on execution, the placehoder will be changed to the supplied argument value
+    //create your sql command that you wish to execute
+    //a placeholder @n will be use for the query argument
+    //query command can be coded on mulitple physical lines
     var querycommand = "SELECT RegionID, RegionDescription "
-                    + "FROM Region "
-                    + "WHERE RegionID = @0";
+             + "FROM Region "
+             + "WHERE RegionID = @0";
 
-    //execute the commmand on the connected database
-    //capture the results of the execution
-    //.QuerySingle() used when one expects a single record to be returned
-    //.Query() used when one expects 0, 1 or more records to be returned
-    //.QueryValue() used when one expects a single value (NOT RECORD) to be returned
+    //execute the sql query command against the database
+    //.QuerySingle()  used when you expect a single record to be returned
+    //.Query() used when you expect 0, 1 or more records to be returned
+    //.QuesryValue() used when you expect a single value (not record) to be returned
     var results = db.QuerySingle(querycommand, searcharg);
-
 }
+    @section head{
+
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
+}
+
 @section banner{
-    <h1>DataBase: Single Query</h1>
+    <h1>Database: Single query</h1>
 }
 
 @if(IsPost)
 {
-    if (thebutton.Equals("clear") )
+    if (thebutton.Equals("clear"))
     {
-        searcharg = "0";
         regionid = "";
         description = "";
-
+        searcharg = "0";
     }
     else
     {
-        //test to see if any record was returned from the query
-        //if no record was returned then the results will be null
+        //.QuerySingle() uses == null to test for no results
+        //.Query() uses .Count() == 0 to test for no results
         if (results == null)
         {
-            <p><span style="color:blue">No data found for region id @searcharg</span></p>
+            //removing old results
             regionid = "";
             description = "";
+            <p><span style="color:blue">There is no region for the supplied region id.</span></p>
         }
         else
         {
-            //a record was actually retrieved
-            //set your output fields
-            //how does one access a data field on the
-            //     results data record(s)
-            //a) via index xxxx[columnindex]
-            //b) via the column title xxxx.columntitlename
-            <p><span style="color:green">Found</span></p>
+            //there is a record to display
+            //How does one access the data on the record?
+
+            //There are two ways to access a column on your record
+            //a) using an index for the column eg.  xxxx[index] 
+            //b) using the column title property name eg. xxxx.columnname
+
+            //you must be concerned with non string datatypes being returns
+            //     as part of your results.
+            //output fields expect strings.
+            //var varaibles obtain their datatype when first used.
             regionid = results[0].ToString();
             description = results.RegionDescription;
         }
-    }
+    }              
 }
+
 <form id="theform" method="post">
     <div class="row">
         <div class="col-md-4">
             <label for="searcharg">Enter Region ID:</label>
             <input type="number" id="searcharg" name="searcharg"
-                   placeholder="enter region id" step="1" min="0"
+                   placeholder="enter region id" step="1" min="0" 
                    value="@searcharg" />
-            <br />
+            <br/>
             <button type="submit" id="formbutton" name="formbutton"
                     class="btn btn-primary" value="search">
                 Search
@@ -99,7 +105,10 @@
             <label for="description">Region Name:</label>
             <input type="text" id="description" name="description"
                    value="@description" />
-            <br />
         </div>
     </div>
 </form>
+
+@section footer{
+    &copy; CPSC1517 Nait, all rights reservered
+}

@@ -9,35 +9,37 @@ namespace WebApp.SamplePages
 {
     public partial class ContestEntry : System.Web.UI.Page
     {
-        public static List<ContestData> EntryCollection;
+        // if we had a database, the data would be stored there
+        //using this static List<T> is ONLY done in this example
+        //     because we have no database.
+        public static List<Entry> ContestEntryCollection;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Message.Text = "";
-            if(!Page.IsPostBack)
+
+            //test Page.IsPostBack to page initialization
+            if (!Page.IsPostBack)
             {
-                EntryCollection = new List<ContestData>();
+                ContestEntryCollection = new List<Entry>();
             }
         }
 
         protected void Submit_Click(object sender, EventArgs e)
         {
-            if(Page.IsValid)
+            //validate the data coming in
+            if (Page.IsValid)
             {
-                //this test will fire the validation controls on the server side
-
-                //if additional validation is require, do that first
+                //validate the user checking the Terms
                 if (Terms.Checked)
                 {
-                    //user has agreed to the contest terms
-                    //collect the data
-                    //create/load a contest entry to the collection
-                    //display the collection.
-                    Message.Text = "Thank you.";
+                    //  yes: create/load Entry, add to List, display List
 
                 }
                 else
                 {
-                    Message.Text = "Terms not agreed to. Entry denied.";
+                    //   no: message
+                    Message.Text = "You did not agree to the terms of this contest. Entry is denied.";
                 }
             }
         }
@@ -51,9 +53,9 @@ namespace WebApp.SamplePages
             City.Text = "";
             PostalCode.Text = "";
             EmailAddress.Text = "";
-            Province.ClearSelection();
-            Terms.Checked = false;
+            Province.SelectedIndex = 0;
             CheckAnswer.Text = "";
+            Terms.Checked = false;
         }
     }
 }
