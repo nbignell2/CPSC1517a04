@@ -16,6 +16,7 @@ namespace WebApp.SamplePages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //clear old messages
             MessageLabel.Text = "";
         }
 
@@ -24,42 +25,58 @@ namespace WebApp.SamplePages
             int productid = 0;
             //validate your input
             if (string.IsNullOrEmpty(SearchArg.Text.Trim()))
-            int searcharg = 0;
-            if (string.IsNullOrEmpty(SearchArg.Text))
             {
-                // message to user missing product id for search
-                MessageLabel.Text = "Product ID search value required.";
+                //bad :message to user
+                MessageLabel.Text = "Product ID is required";
             }
-            else if (int.TryParse(SearchArg.Text, out searcharg))
+            else if (int.TryParse(SearchArg.Text, out productid))
             {
-                //create an instance of the controller class we
-                //    wish to use
-                ProductController sysmgr = new ProductController();
-                //issue the request to this controller instance
-                //   and capture the returning Product record (instance)
-                Product results = sysmgr.Product_Get(int.Parse(SearchArg.Text));
-                //test the returned value for null (not found)
-                if (results == null)
+                //good: Standard Lookup pattern and display
+                //since we are leaving this project (webapp)
+                //   and going to another project (BLL)
+                //   user friendly error handling is required
+                try
                 {
-                    //   not found: not found message
-                    MessageLabel.Text = "No Product from for supplied ID";
+                    //create an instance of the appropriate
+                    //   BLL class
+                    ProductController sysmgr = new ProductController();
+                    //issue your request to the appropriate BLL class
+                    //   method
+                    Product results = sysmgr.Product_Get(int.Parse(SearchArg.Text));
+                    //test results to see if anything was found
+                    //null: product id not found
+                    //otherwise: Product instance exists
+                    if (results == null)
+                    {
+                        //bad: message to user
+                        MessageLabel.Text = "No data found for supplied id";
+                    }
+                    else
+                    {
+                        //good: found
+                        ProductID.Text = results.ProductID.ToString();
+                        ProductName.Text = results.ProductName;
+                    }
                 }
-                else
+                catch(Exception ex)
                 {
-                    //   found: product data is displayed
-                    ProductID.Text = results.ProductID.ToString();
-                    ProductName.Text = results.ProductName;
+                    MessageLabel.Text = ex.Message;
                 }
+
             }
             else
             {
-                MessageLabel.Text = "Product ID must be a positive numeric value.";
+                //bad :message to user
+                MessageLabel.Text = "Product ID must be a number greater than 0";
             }
+            
+            
         }
 
         protected void Clear_Click(object sender, EventArgs e)
         {
             SearchArg.Text = "";
+            ProductID.Text = "";
             ProductName.Text = "";
         }
     }

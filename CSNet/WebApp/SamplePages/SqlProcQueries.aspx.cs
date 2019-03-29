@@ -6,9 +6,10 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 #region Additional Namespaces
-using NorthwindSystem.BLL;  //points to the controller class
-using NorthwindSystem.Data; //points to the record descriptions
+using NorthwindSystem.BLL;
+using NorthwindSystem.Data;
 #endregion
+
 
 namespace WebApp.SamplePages
 {
@@ -19,30 +20,35 @@ namespace WebApp.SamplePages
             //clear old messages
             MessageLabel.Text = "";
 
-            //load the dropdownlist on the first time processing this page
+            //the dropdownlist (ddl) control will be loaded
+            //   with data from the database
+            //consideration needs to be given to the data as to
+            //   it change frequence
+            //if your data does not change frequently then you
+            //   can consider loading on page load
             if (!Page.IsPostBack)
             {
-                //all calls should be done in user friendly error handling
+                //use user friendly error handling
                 try
                 {
-                    //when the page is first loaded, obtain the
-                    //   complete list of categories from the
-                    //   database
+                    //create and connect to the appropriate BLL class
                     CategoryController sysmgr = new CategoryController();
+                    //issue the request to the appropriate BLL class method
+                    //      and capture results
                     List<Category> datainfo = sysmgr.Category_List();
-                    //sort this list alphabetically
-                    datainfo.Sort((x, y) => x.CategoryName.CompareTo(y.CategoryName));
-                    // assign the data to the dropdownlist control
+                    //optionally: sort the results
+                    datainfo.Sort((x,y) => x.CategoryName.CompareTo(y.CategoryName));
+                    //attach data source collection to ddl
                     CategoryList.DataSource = datainfo;
-                    //indicate the DataTextField and DataValueField
+                    //set the ddl DataTextField and DataValueField properties
                     CategoryList.DataTextField = nameof(Category.CategoryName);
-                    CategoryList.DataValueField = nameof(Category.CategoryID);
-                    //Bind the datasource
+                    CategoryList.DataValueField = "CategoryID";
+                    //physically bind the data to the ddl control
                     CategoryList.DataBind();
-                    //add a prompt
+                    //optionally: add a prompt to the ddl control
                     CategoryList.Items.Insert(0, "select ...");
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
                     MessageLabel.Text = ex.Message;
                 }
@@ -54,31 +60,33 @@ namespace WebApp.SamplePages
             //ensure a selection was made
             if (CategoryList.SelectedIndex == 0)
             {
-                MessageLabel.Text = "Select a category of products to display";
+                //  no selection: message to user
+                MessageLabel.Text = "Select a product category to view products.";
             }
             else
             {
-                //within user friendly error handling
+                //  yes selection: process lookup
+                //          user friendly error handling
                 try
                 {
-                    //  connect to the appropriate controller
+                    //          create and connect to BLL class
                     ProductController sysmgr = new ProductController();
-                    //  issue a request to the controller's appropriate method
-                    List<Product> datainfo = sysmgr.Product_GetByCategory(int.Parse(CategoryList.SelectedValue));
-                    //  check results
+                    //          issue request for lookup to appropriate BLL class method
+                    //                and capture results
+                  List<Product> datainfo = sysmgr.Product_GetByCategory(int.Parse(CategoryList.SelectedValue));
+                    //          check results ( .Count() == 0)
                     if (datainfo.Count() == 0)
                     {
-                        //    none ( .Count() == 0): message to user
-                        MessageLabel.Text = "No product for select category";
-                        //optionally clear out display
+                        //            no records: message to user
+                        MessageLabel.Text = "No data found for select category.";
+                        //optionally: you may wish to remove from display any old
+                        //    data so it is NOT confused with this message
                         CategoryProductList.DataSource = null;
                         CategoryProductList.DataBind();
                     }
                     else
                     {
-                        //    found: load a gridview
-                        //optional sort on ProductName
-                        datainfo.Sort((x, y) => x.ProductName.CompareTo(y.ProductName));
+                        //            yes records: display data
                         CategoryProductList.DataSource = datainfo;
                         CategoryProductList.DataBind();
                     }
@@ -99,57 +107,43 @@ namespace WebApp.SamplePages
 
         protected void CategoryProductList_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            //the e parameter will supply the new page index that is requested
-            //you must set the grid control pageindex to this supplied value
+            //the developer must code this event method when they install paging
+            //this method will do 2 things
+            //a) set the control's PageIndex property to the data "page" of the
+            //   data collection
+            //   the new pageindex is located in the e parameter of this method
             CategoryProductList.PageIndex = e.NewPageIndex;
 
-            //you must refresh your gridview with a
-            //   call to the database
-            try
-            {
-                ProductController sysmgr = new ProductController();
-                List<Product> datainfo = sysmgr.Product_GetByCategory(int.Parse(CategoryList.SelectedValue));
-                datainfo.Sort((x, y) => x.ProductName.CompareTo(y.ProductName));
-                CategoryProductList.DataSource = datainfo;
-                    CategoryProductList.DataBind();
-            }
-            catch (Exception ex)
-            {
-                MessageLabel.Text = ex.Message;
-            }
+            //b) refresh the data collection for the control
+            //   re issue the call to the database for data
+            //   assign data results to control
+            //   bind the results
+            Submit_Click(sender, new EventArgs());
         }
 
         protected void CategoryProductList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //this event belongs to the Command Select button
-            //accessing the data is wholly dependent on the type of data display used
-            //    in the gridview cell.
-            //there are 4 different ways to access your data (because there are 4 ways
-            //    to setup your gridview cell.
-            //We have used the generic template technique to create
-            //    our gridview cell contents
-            //Templates allow the developer to place web controls
-            //    within each cell
-            //When you access a web control within the gridview cell
-            //    you WILL reference the control type and then use
-            //    the control type access technique
-            string productid;
-            string discontinued;
-            string productname;
-
-            //personal style
+            //access the data on the gridview selected row
+            //the rows of a gridview are in a collection referenced by .Rows
+            //the row index of the selected gridview row can be referenced
+            //     by .SelectedIndex
+            //personal style: short form to GridViewRow pointer
             GridViewRow agvrow = CategoryProductList.Rows[CategoryProductList.SelectedIndex];
-            //grab ProductID
-            //syntax
-            // agvrow: this points to the selected gridview row
-            // FindControl("controlidname"): this is the ID value on the
-            //     gridview cell
-            // as controltype: this indicates the type of web control 
-            //     within the gridview cell that you are touching
-            // (xxxxx).Text: indicates the web control access technique
-            productid = (agvrow.FindControl("ProductID") as Label).Text;
-            productname = (agvrow.FindControl("ProductName") as Label).Text;
-            if ((agvrow.FindControl("Discontinued") as CheckBox).Checked)
+
+            //accessing the data on a gridview cell is dependent on how the
+            //   cell was setup.
+            //we are using a TemplateField with a web control inside the ItemTemplate
+            //syntax:
+            //   (agvrow.FindControl("controlid") as controltype).controltypeaccess
+            // agvrow: points to the selected gridview row
+            // .FindControl("controlid") looks for a control on the row by the ID name of
+            //      controlid
+            // as controltype: identifies that type of control
+            // .controltypeaccess: how the type of control is accessed for data
+            string productid = (agvrow.FindControl("ProductID") as Label).Text;
+            string productname = (agvrow.FindControl("ProductName") as Label).Text;
+            string discontinued = "";
+            if((agvrow.FindControl("Discontinued") as CheckBox).Checked)
             {
                 discontinued = "discontinued";
             }
@@ -157,9 +151,8 @@ namespace WebApp.SamplePages
             {
                 discontinued = "available";
             }
+            MessageLabel.Text = productname + " (" + productid + ") is " + discontinued;
 
-            MessageLabel.Text = productname + " (" + productid + " ) " +
-                "is " + discontinued;
         }
     }
 }
