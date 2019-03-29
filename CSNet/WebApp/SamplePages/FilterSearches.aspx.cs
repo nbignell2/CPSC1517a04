@@ -124,6 +124,7 @@ namespace WebApp.NorthwindPages
             int index = Int32.Parse(e.Item.Value);
             MultiView1.ActiveViewIndex = index;
         }
+   
 
         protected void CategoryList_SelectedIndexChanged(object sender, EventArgs e)
         {

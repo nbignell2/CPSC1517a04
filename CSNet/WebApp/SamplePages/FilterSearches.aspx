@@ -126,12 +126,12 @@
                     </blockquote>
                     <asp:Label ID="Label7" runat="server" Text="Supplier:"></asp:Label>
                     <asp:DropDownList ID="SupplierListV5" runat="server"></asp:DropDownList>
-                    <asp:Button ID="FindCategories" runat="server" Text="Categories?"  />
+                    <asp:Button ID="FindCategories" runat="server" Text="Categories?" />
                     <asp:Label ID="label8" runat="server" Text="Categories:"></asp:Label>
                     <asp:DropDownList ID="CategoryListV5" runat="server"></asp:DropDownList>
                     <asp:Button ID="FindSupplierCategoryProducts" runat="server" Text="Products?" 
                           Enabled="false" />
-                     <asp:Button ID="Reset" runat="server" Text="Reset"   />
+                     <asp:Button ID="Reset" runat="server" Text="Reset"  />
                     <br />
                     <br />
                     <asp:GridView ID="ProductsGridViewV5" runat="server">
