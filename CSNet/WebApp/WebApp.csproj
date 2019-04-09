@@ -145,6 +145,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootwrap-freecode.css" />
     <Content Include="Content\myTabsSheet.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
@@ -164,10 +165,12 @@
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="SamplePages\FilterSearches.aspx" />
+    <Content Include="SamplePages\ProductCRUD.aspx" />
     <Content Include="SamplePages\SimpleQueries.aspx" />
     <Content Include="SamplePages\SqlProcQueries.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootwrap-freecode.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -235,6 +238,13 @@
     </Compile>
     <Compile Include="SamplePages\FilterSearches.aspx.designer.cs">
       <DependentUpon>FilterSearches.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SamplePages\ProductCRUD.aspx.cs">
+      <DependentUpon>ProductCRUD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SamplePages\ProductCRUD.aspx.designer.cs">
+      <DependentUpon>ProductCRUD.aspx</DependentUpon>
     </Compile>
     <Compile Include="SamplePages\SimpleQueries.aspx.cs">
       <DependentUpon>SimpleQueries.aspx</DependentUpon>

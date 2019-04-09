@@ -64,6 +64,9 @@
                              <HeaderStyle BackColor="#99CCFF" />
                              </asp:CommandField>
                         </Columns>
+                        <EmptyDataTemplate>
+                            No product on file for given category.
+                        </EmptyDataTemplate>
                         <PagerSettings FirstPageText="Start" LastPageText="End" Mode="NumericFirstLast" PageButtonCount="3" />
                     </asp:GridView>
                 </td>
