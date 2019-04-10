@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <div class="alert alert-warning">
             <blockquote style="font-style: italic">
-                This illustrates a single web form page CRUD maintenance. 
+                TThis illustrates a single web form page CRUD maintenance. 
                 This form will use basic bootstrap formatting
             </blockquote>
         </div>
@@ -17,7 +17,7 @@
       <%--  this will be the lookup control area--%>
          <div class="col-md-12"> 
              <asp:Label ID="Label5" runat="server" Text="Select a Product"></asp:Label>&nbsp;&nbsp;
-             <asp:DropDownList ID="ProductList" runat="server"></asp:DropDownList>&nbsp;&nbsp;
+             <asp:DropDownList ID="ProductList" runat="server" OnSelectedIndexChanged="ProductList_SelectedIndexChanged"></asp:DropDownList>&nbsp;&nbsp;
              <asp:LinkButton ID="Search" runat="server" Font-Size="X-Large" OnClick="Search_Click" >Search</asp:LinkButton>&nbsp;&nbsp;
              <asp:LinkButton ID="Clear" runat="server" Font-Size="X-Large" OnClick="Clear_Click" >Clear</asp:LinkButton>&nbsp;&nbsp;
              <asp:LinkButton ID="AddProduct" runat="server" Font-Size="X-Large" OnClick="AddProduct_Click" >Add</asp:LinkButton>&nbsp;&nbsp;
@@ -37,7 +37,7 @@
       <%--  this will be the entity CRUD area--%>
         <div class ="col-md-12">
             <fieldset class="form-horizontal">
-                <legend>Product Information</legend>
+                <legend>Product Information/legend>
 <%--                each control group will consist of a label and the associated control--%>
                 <asp:Label ID="Label1" runat="server" Text="Product ID"
                      AssociatedControlID="ProductID"></asp:Label>
