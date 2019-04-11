@@ -37,7 +37,7 @@
       <%--  this will be the entity CRUD area--%>
         <div class ="col-md-12">
             <fieldset class="form-horizontal">
-                <legend>Product Information/legend>
+                <legend>Product Information</legend>
 <%--                each control group will consist of a label and the associated control--%>
                 <asp:Label ID="Label1" runat="server" Text="Product ID"
                      AssociatedControlID="ProductID"></asp:Label>
