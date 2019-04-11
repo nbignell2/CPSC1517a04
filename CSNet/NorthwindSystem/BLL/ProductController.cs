@@ -6,46 +6,44 @@ using System.Threading.Tasks;
 
 
 #region Additional Namespaces
-using NorthwindSystem.Data; //obtains the <T> devinitions
-using NorthwindSystem.DAL;  //obtains the context class
-using System.Data.SqlClient;   //required for parameter used in Sql Proc calls
+using NorthwindSystem.Data;     //access to data definitions
+using NorthwindSystem.DAL;      //access to context class
+using System.Data.SqlClient;    //access to SqlParameter()
 #endregion
 
 namespace NorthwindSystem.BLL
 {
-    //this class needs to be called from another class(es)
-    //this class is part of the system interface to the
-    //   web application (and/or any other client that
-    //   needs to get to the Northwind database)
-    //this class is the enter point into the Northwind system
-    //this class needs to be public
+    //this class will be called from an external source
+    //in our example, this source will be the web page
+    //naming standard is <T>Controller which represents
+    //    a particular data class (sql table)
     public class ProductController
     {
-        //this method will receive a value that
-        //   represents the ProductID
-        //this method will forward the value to
-        //   the DbSet<T> in the DbContext class
-        //   for processing
-        //this method will return an instance of Product
-        //this method must be public
+        //code methods which will be called for processing
+        //methods will be public
+        //these methods are referred to as the system interface
+
+        //a method to lookup a record on the database table
+        //    by primary key
+        //input: primary key value
+        //output: instance of data class
         public Product Product_Get(int productid)
         {
-            //the instantiation of the DbContext will
-            //  be done in a transaction using group
+            //the processing of the request will be done
+            //  in a transaction using the Context class
+            //a) instance of Context class
+            //b) issue the request for lookup via the appropriate
+            //      DbSet<T>
+            //c) return results
             using (var context = new NorthwindContext())
             {
-                //return the results of the method call
-                //context points to the DAL context class
-                //Products is theDbSet<T>
-                //.Find(pkey value) looks for a set record
-                //     whom's primary key is equal to the
-                //     supplied value
                 return context.Products.Find(productid);
             }
         }
 
-        //this method will return all records of a DbSet<T>
-        //no parameter value is necessarys
+        //a method to retreive all records on the DbSet<T>
+        //input: none
+        //ouput: List<T>
         public List<Product> Product_List()
         {
             using (var context = new NorthwindContext())
@@ -53,32 +51,36 @@ namespace NorthwindSystem.BLL
                 return context.Products.ToList();
             }
         }
+    
 
-        //this method will query the DbSet<T> using a sql
-        //   procedure
-        //the query will be against a non primary key field
-        //the result return will still be the complete entity
-        //  <T> record
-        //we need to add a using clause to System.Data.SqlClient
-        //  to our class
-        //input: category id
-        //output: List<Product> matching category id
+        //at times you will need to do a NON-PRIMARY KEY lookup
+        //you will NOT be able to use .Find(pkey)
+        //you can call sql procedures via your context class
+        //    within your bll class method
+        //use will use .Database.SqlQuery<T>()  NOT the DbSet<T>
+        //the argument(s) for SqlQuery are
+        // a) the sql procedure execute statement (as a string)
+        // b) IF REQUIRED, any arguments for the procedure
+        //passing the data arguments to the procedure will make use of
+        //      new SqlParameter() object
+        //the SqlParameter object needs a using clause: System.Data.SqlClient
+        //SqlParameter takes two arguments
+        // a) procedure parameter name
+        // b) value to be passed
         public List<Product> Product_GetByCategory(int categoryid)
         {
             using (var context = new NorthwindContext())
             {
-                //generally datasets from DbSet calls return as
-                //   a datatype of IEnumerable<T>
-                //this IEnumerable<T> dataset will be turned into
-                //   a list by using .ToList()
+                //normally you will find that data from EntityFramework
+                //     returns as an IEnumerable<T> datatype
+                //one can convert the IEnumerable<T> to a List<T> using .ToList()
                 IEnumerable<Product> results =
                     context.Database.SqlQuery<Product>(
                         "Products_GetByCategories @CategoryID",
-                        new SqlParameter("CategoryID",categoryid));
+                        new SqlParameter("CategoryID", categoryid));
                 return results.ToList();
             }
         }
-
         public List<Product> Products_GetByPartialProductName(string partialname)
         {
             using (var context = new NorthwindContext())
@@ -89,6 +91,8 @@ namespace NorthwindSystem.BLL
                 return results.ToList();
             }
         }
+
+      
 
         public List<Product> Products_GetBySupplierPartialProductName(int supplierid, string partialproductname)
         {
@@ -132,5 +136,43 @@ namespace NorthwindSystem.BLL
                 return results.ToList();
             }
         }
-    }
-}
+
+        #region Add, Update and Delete of CRUD
+
+        //The Add method will be used to insert a product instance into the database
+        //This method will recieve an instance of Product
+        //This method can optionally return the new identity primary key
+        public int Product_Add(Product item)
+        {
+            //the addition of the data will be done in a transaction block
+            using (var context = new NorthwindContext())
+            {
+
+                //Step 1: Staging
+                //one adds the new instance to the appropriate DbSet<T>
+                //the data needs to be in an instance of <T> 
+                //staging does NOT place the record on the database
+                //if the primary key of the <T> is an identity type
+                //    the pkey value is NOT yet set
+                context.Products.Add(item);
+
+                //step 2: Committing transaction
+                //if the command to save your DbSet changes is NOT executed
+                //   the transaction fails and a RollBack is performed
+                //if the command to save your DbSet changes is executed and fails
+                //   the transaction is RollBacked and the appropriate error message
+                //   is issued
+                //at this point ANY entity validation is executed
+                //if the command to save your DbSet changes is successful then the
+                //   data is in the database (unless the database finds an exception)
+                //at this point your new identity pkey value is present in your
+                //   <T> instance and can be retrieved
+                context.SaveChanges();
+
+                //optionally you can return the new pKey value
+                return item.ProductID;
+            }
+        }
+        #endregion
+    }//eoc
+}//eon
