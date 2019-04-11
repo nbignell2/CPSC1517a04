@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <div class="alert alert-warning">
             <blockquote style="font-style: italic">
-                This illustrates a single web form page CRUD maintenance. 
+                TThis illustrates a single web form page CRUD maintenance. 
                 This form will use basic bootstrap formatting
             </blockquote>
         </div>
@@ -22,7 +22,8 @@
              <asp:LinkButton ID="Clear" runat="server" Font-Size="X-Large" OnClick="Clear_Click" >Clear</asp:LinkButton>&nbsp;&nbsp;
              <asp:LinkButton ID="AddProduct" runat="server" Font-Size="X-Large" OnClick="AddProduct_Click" >Add</asp:LinkButton>&nbsp;&nbsp;
              <asp:LinkButton ID="UpdateProduct" runat="server" Font-Size="X-Large" OnClick="UpdateProduct_Click" >Update</asp:LinkButton>&nbsp;&nbsp;
-             <asp:LinkButton ID="RemoveProduct" runat="server" Font-Size="X-Large" OnClick="RemoveProduct_Click" >Remove</asp:LinkButton>&nbsp;&nbsp;
+             <asp:LinkButton ID="RemoveProduct" runat="server" Font-Size="X-Large" OnClick="RemoveProduct_Click" OnClientClick="return confirm('Discontinue displayed product?')" >
+                 Discontinued</asp:LinkButton>&nbsp;&nbsp;
          
              <br /><br />
              <asp:DataList ID="Message" runat="server">

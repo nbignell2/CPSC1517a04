@@ -19,6 +19,7 @@ namespace NorthwindSystem.BLL
     //    a particular data class (sql table)
     public class ProductController
     {
+        #region Queries
         //code methods which will be called for processing
         //methods will be public
         //these methods are referred to as the system interface
@@ -136,6 +137,7 @@ namespace NorthwindSystem.BLL
                 return results.ToList();
             }
         }
+        #endregion
 
         #region Add, Update and Delete of CRUD
 

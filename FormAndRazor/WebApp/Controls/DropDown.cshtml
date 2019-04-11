@@ -1,27 +1,32 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
-}
+    Page.Title = "Dropdown";
 
+    var selection = Request.Form["pageselection"];
+}
 @section head{
+
     <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
 }
+
 @section banner{
-    <h1>DropDownList (select tag)</h1>
+    <h1>DropDown (select) for Razor Form Samples</h1>
 }
 
 @if (IsPost)
 {
-    var choice = Request.Form["pageselection"];
-    switch (choice.ToUpper())
+    //no button descision (only one button)
+    //validation
+    //the validation in this sample will be done inside the switch
+    //if a page was not selected then the switch default will handle
+    //     the select ... option
+    switch(selection.ToUpper())
     {
         case "TEXTBOXES":
             {
-                //go redirect yourself to another page
-                // you use the Response.Redirect command
-                //this command needs the destination page
-                // as an argument value
-                //use relative addressing to get to your
-                // destination page
+                //the object class for data going out is Response
+                //the method to direct yourself to another page is .Redirect(page)
+                //we will use relative addressing to get to another page
                 Response.Redirect("TextBoxes.cshtml");
                 break;
             }
@@ -37,8 +42,8 @@
             }
         default:
             {
-                <p><span style="color:firebrick">
-                    <strong>Make at page choice from the list.</strong></span></p>
+                <p><span style="color:firebrick"><strong>
+                     Select the sample you wish to view.</strong></span></p>
                 break;
             }
     }
@@ -47,12 +52,8 @@
 <form id="theform" method="post">
     <div class="row">
         <div class="col-md-offset-4">
-            <label for="pageselection">Select sample page:</label>
+            <label for="pageselection">Select control example:</label>
             &nbsp;&nbsp;
-            <!-- the select tag is used for a dropdown list
-         each item in the list is setup using the option tag
-         a data value is associated with the list item
-             by using the value attribute-->
             <select id="pageselection" name="pageselection">
                 <option value="">select ...</option>
                 <option value="TextBoxes">TextBoxes</option>
@@ -60,10 +61,17 @@
                 <option value="CheckBoxes">CheckBoxes</option>
             </select>
             &nbsp;&nbsp;
-            <button type="submit" class="btn btn-primary"
-                    id="formbutton" name="formbutton" value="submit">
+            <button type="submit" id="formbutton" name="formbutton"
+                    value="Submit" class="btn btn-primary">
                 Go To ...
             </button>
         </div>
     </div>
 </form>
+@section footer{
+    &copy; CPSC1517 Nait, all rights reservered
+}
+
+
+
+

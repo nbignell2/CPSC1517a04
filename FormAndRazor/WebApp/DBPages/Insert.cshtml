@@ -1,9 +1,12 @@
 ﻿@{
+    /**/
+
     Layout = "~/_Layout.cshtml";
     Page.Title = "Crud : Insert";
 
     var thebutton = Request.Form["formButton"];
 
+    //variables to hold values for the Product record fields
     var productname = "";
     var quantityperunit = "";
     var unitprice = "";
@@ -17,51 +20,49 @@
     //connect to db
     var db = Database.Open("NWDB");
     var catcommand = "SELECT CategoryID, CategoryName "
-                    + "FROM Categories "
-                    + "ORDER BY CategoryName";
+            + "FROM Categories "
+            + "ORDER BY CategoryName";
     var catResults = db.Query(catcommand);
-    var supcommand = "SELECT supplierID, CompanyName "
-                    + "FROM Suppliers "
-                    + "ORDER BY CompanyName";
+    var supcommand = "SELECT SupplierID, CompanyName "
+            + "FROM Suppliers "
+            + "ORDER BY CompanyName";
     var supResults = db.Query(supcommand);
 
-    //coding of validation controls
+    //coding of Validation Controls
     //Validation controls are run on the server side
     //There is one validation control per input control
     //Validation controls consist of Validators
     //There can be multiple Validators inside the Validation Control
     //Validation controls are linked to the input control via the control name
-    //structure of a validator is dependent on the validation of that validator
-    //Validators do not execute unless there is data present
-    //execept for .Required
+    //structure of a Validator is dependent on the validation of that Validator
+    //Validators do not execute unless there is data present except for .Required
     Validation.Add("ProductName",
-        Validator.Required("Product Name is required"),
-        Validator.StringLength(40, 1, "Product name is limited to 40 characters"));
+        Validator.Required("Product Name is required."),
+        Validator.StringLength(40,1,"Product name is limited to 40 characters"));
     Validation.Add("QuantityPerUnit",
-        Validator.StringLength(20, 0, "Quantity per unit is limited to 20 characters"));
+        Validator.StringLength(20,0,"Quantity per Unit is limited to 20 characters"));
     Validation.Add("UnitPrice",
-        Validator.Range(0.00,double.MaxValue, "Unit price cannot be negative"));
+        Validator.Range(0.00,double.MaxValue,"Unit price can not be negative."));
     Validation.Add("UnitsInStock",
         Validator.Integer("Units must be a whole value."),
-        Validator.Range(0.00, 32767, "Unit stock must be between 0-32767"));
-    Validation.Add("UnitsInOrder",
+        Validator.Range(0.00, 32767, "Units in stock must be between 0 and 32767."));
+    Validation.Add("UnitsOnOrder",
         Validator.Integer("Units must be a whole value."),
-        Validator.Range(0.00, 32767, "Unit order must be between 0-32767"));
+        Validator.Range(0.00, 32767, "Units on order must be between 0 and 32767."));
     Validation.Add("ReorderLevel",
         Validator.Integer("Units must be a whole value."),
-        Validator.Range(0.00, 32767, "Reorder Level must be between 0-32767"));
+        Validator.Range(0.00, 32767, "Reorder level must be between 0 and 32767."));
 
-    ////other examples
-    ////field matching
+    //other examples
+    //field matching
     //Validation.Add("Password",
-    //    Validator.Required("Password required"),
-    //    Validator.EqualsTo("ConfirmPassword","Password not confirmed"));
-    ////pattern matching: regular expressions
+    //    Validator.Required("Password is required."),
+    //    Validator.EqualsTo("ConfirmPassword","Password not confirmed."));
+    //pattern matching: regular expressions
     //Validation.Add("PostalCode",
-    //    Validator.Required("Postal code required"),
-    //    Validator.Regex("[A-Za-Z][0-9][A-Za-Z][0-9][A-Za-Z][0-9]",
-    //    "Invalid Postal Code"));
-
+    //    Validator.Required("Postal code is required"),
+    //    Validator.Regex("[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]",
+    //            "Invalid Postal Code"));
 }
 @section head{
     <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
@@ -103,71 +104,72 @@
         discontinued = Request.Form["Discontinued"];
 
         //validation occurs against data that will be
-        // sent for processing against your data base
+        //   sent for processing against your database
         if (Validation.IsValid())
         {
+
             //process incoming data
             //user friendly error handling
-
             try
             {
-                //connect to db
-                db = Database.Open("NWDB");
+
                 //create sql insert command
                 //note the number and position of placeholders for each supplied field
-                //ternary operator used for nullable fields
-                var insertcommand =
-           "INSERT INTO Products (ProductName, SupplierID, CategoryID, QuantityPerUnit, "
-                 + " UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued) "
-                 + " VALUES(@0, @1, @2, @3, @4, @5, @6, @7, @8)";
+                var insertcommand = "INSERT INTO PRODUCTS (ProductName, SupplierID, CategoryID, QuantityPerUnit, "
+                            + "UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, "
+                            + "Discontinued) "
+                            + "VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8)";
 
-                //execute insert command
+                //execute the insert command
+                //the method used is the .Execute(command string, list of placeholder variables)
+                //ternary operator used for nullable fields
+
                 db.Execute(insertcommand, productname,
-                        selectedsupplier.Equals("0") ? null : selectedsupplier,
-                        selectedcategory.Equals("0") ? null : selectedcategory,
-                        string.IsNullOrEmpty(quantityperunit) ? null : quantityperunit,
-                        string.IsNullOrEmpty(unitprice) ? null : unitprice,
-                        string.IsNullOrEmpty(unitsinstock) ? null : unitsinstock,
-                        string.IsNullOrEmpty(unitsonorder) ? null : unitsonorder,
-                        string.IsNullOrEmpty(reorderlevel) ? null : reorderlevel,
-                        0);
+                    selectedsupplier.Equals("0") ? null : selectedsupplier,
+                    selectedcategory.Equals("0") ? null : selectedcategory,
+                    string.IsNullOrEmpty(quantityperunit) ? null : quantityperunit,
+                    string.IsNullOrEmpty(unitprice) ? null : unitprice,
+                    string.IsNullOrEmpty(unitsinstock) ? null : unitsinstock,
+                    string.IsNullOrEmpty(unitsonorder) ? null : unitsonorder,
+                    string.IsNullOrEmpty(reorderlevel) ? null : reorderlevel,
+                    0
+                    );
+
+
                 //use of bootstrap text positioning
-                <p class="col-sm-11 text-center">
-                    <span style="color:green">
-                        <strong>
-                            New product added to file.
-                        </strong>
-                    </span>
-                </p>
+                //success message
+            <p class="col-sm-11 text-center">
+                <span style="color:green">
+                    <strong>
+                        New product added to file.
+                    </strong>
+                </span>
+            </p>
             }
             catch (Exception ex)
             {
-                <p class="col-sm-11 text-center">
-                    <span style="color:firebrick">
-                        <strong>@ex.Message</strong>
-                    </span>
-                </p>
+            <p class="col-sm-11 text-center alert alert-danger">
+                <span style="color:firebrick">
+                    <strong>
+                        @ex.Message
+                    </strong>
+                </span>
+            </p>
             }
         }
-    
     }
 }
-
-@*There are two ways to display your validation error messages:
-    a.) using .ValidationSummary()
-    b.) using .ValidationMessage("controlname")
-
-    a.) messages are displayed by default as a bulleted list
-        all error messages for the control are displayed
-    b.) messages are displayed where the message display control is physically positioned
-        only the first error message is displayed
-    must be printed individually*@)
-
+@* There are two ways to display your Validation error messages:
+    a) using .ValidationSummary()
+    b) using .ValidationMessage("controlname")
+    
+    a) messages are display by defaults as a bulletted list
+       all error messages for the control are display
+    b) messages are display where the message display control is phyiscally positioned
+       only the first error message is displayed
+       must be used on very control individually*@
 @Html.ValidationSummary()
-
-
-
-<form id="theForm" action="" method="post">
+<form id="theForm" method="post">
     <div class="row ">
         <div class="col-sm-5 text-right">
             <label id="ProductName">Name:</label><br />
@@ -181,13 +183,13 @@
             <label id="Discontinued">Disc.:</label><br /><br />
         </div>
         <div class="col-sm-5">
-
-            <input name="ProductName" id="ProductName" type="text" value="@productname"
+            <!-- the title attribute creates the tooltip for the control-->
+            <input name="ProductName" id="ProductName" type="text" value="@productname" 
                    title="Product Name." />
-            @Html.ValidationMessage("ProductName")<br />
+            @Html.ValidationMessage("ProductName")
+            <br />
             <select id="SupplierID" name="SupplierID">
                 <option value="0">select ...</option>
-                <!--  loop code here-->
                 @foreach (var supitem in supResults)
                 {
                     if (selectedsupplier == supitem[0].ToString())
@@ -202,12 +204,10 @@
                             @supitem[1]
                         </option>
                     }
-
                 }
             </select><br />
             <select id="CategoryID" name="CategoryID">
                 <option value="0">select ...</option>
-                <!--  loop code here-->
                 @foreach (var catitem in catResults)
                 {
                     if (selectedcategory == catitem[0].ToString())
@@ -222,20 +222,16 @@
                             @catitem[1]
                         </option>
                     }
-
                 }
             </select><br />
             <input name="QuantityPerUnit" id="QuantityPerUnit" type="text"
                    value="@quantityperunit" /><br />
-            <input name="UnitPrice" id="UnitPrice" type="text" value="@unitprice"
-                    /><br />
-            <input name="UnitsInStock" id="UnitsInStock" type="text" value="@unitsinstock"
-                   title="Quantity on Hand." /><br />
-            <input name="UnitsOnOrder" id="UnitsOnOrder" type="text" value="@unitsonorder"
-                   title="Quantity on Order." /><br />
-            <input name="ReorderLevel" id="ReorderLevel" type="text" value="@reorderlevel"
-                    title="Reorder Level." /><br />
-            @*HTML5 client side validation
+            <input name="UnitPrice" id="UnitPrice" type="text" 
+              value="@unitprice" /><br />
+            <input name="UnitsInStock" id="UnitsInStock" type="text" value="@unitsinstock" title="Quantity on Hand." /><br />
+            <input name="UnitsOnOrder" id="UnitsOnOrder" type="text" value="@unitsonorder" title="Quantity on Order." /><br />
+            <input name="ReorderLevel" id="ReorderLevel" type="text" value="@reorderlevel" title="Reorder Level." /><br />
+            @*  HTML5 client side validation
 
                 <input name="UnitPrice" id="UnitPrice" type="number" value="@unitprice"
                    step="0.01" min="0.00" /><br />
@@ -256,7 +252,9 @@
                     class="btn btn-primary" style="width:90px">
                 Add
             </button>&nbsp;&nbsp;
-            @*If you need to override any html5 client side validation for a button then add the attribute formnovalidate to the button*@
+            @* if you need to override any html5 client side validation
+                for a button then add the attribute formnovalidate to the
+                button*@
             <button type="submit" name="formButton" value="reset"
                     class="btn " style="width:90px" formnovalidate>
                 Clear
@@ -264,3 +262,6 @@
         </div>
     </div>
 </form>
+@section footer{
+    &copy; CPSC1517 Nait, all rights reserved
+}
