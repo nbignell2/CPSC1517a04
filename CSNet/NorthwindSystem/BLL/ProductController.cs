@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using NorthwindSystem.Data;     //access to data definitions
 using NorthwindSystem.DAL;      //access to context class
 using System.Data.SqlClient;    //access to SqlParameter()
+using System.ComponentModel;
 #endregion
 
 namespace NorthwindSystem.BLL
@@ -17,6 +18,7 @@ namespace NorthwindSystem.BLL
     //in our example, this source will be the web page
     //naming standard is <T>Controller which represents
     //    a particular data class (sql table)
+    [DataObject]
     public class ProductController
     {
         #region Queries
@@ -68,6 +70,7 @@ namespace NorthwindSystem.BLL
         //SqlParameter takes two arguments
         // a) procedure parameter name
         // b) value to be passed
+        [DataObjectMethod(DataObjectMethodType.Select,false)]
         public List<Product> Product_GetByCategory(int categoryid)
         {
             using (var context = new NorthwindContext())
@@ -173,6 +176,75 @@ namespace NorthwindSystem.BLL
 
                 //optionally you can return the new pKey value
                 return item.ProductID;
+            }
+        }
+
+        //Update
+        //this logic will maintain the entire database record when updating
+        //the result of the commit will return the number of rows affected
+        //input: an instance of your <T>, with the pkey value included
+        //output: rows affected
+        public int Product_Update(Product item)
+        {
+            //transaction
+            using (var context = new NorthwindContext())
+            {
+                //staging
+                //the entire record will be staged
+                //optionally
+                //   there may be additional attributes on your
+                //   record that track when updates are done and/or
+                //   track who did the updates
+                //   these attributes are filled by the logic in 
+                //   this control and SHOULD NOT be expected from
+                //   the user
+                //item.LastModified = DateTime.Now;
+                context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+
+                //commit
+                //this will return the number of rows affected
+                return context.SaveChanges();
+
+            }
+        }
+
+        //Delete
+        //physical delete: physical removal of the record from the database
+        //logical delete: usually some record attribute is set to indicate
+        //                that this record should be ignored
+        //input: the pkey value of the record
+        //output: rows affected
+        public int Product_Delete(int productid)
+        {
+            //transaction
+            using (var context = new NorthwindContext())
+            {
+                //physical
+                //  removal of record from the database
+
+                ////find and retain the record to remove
+                //var existing = context.Products.Find(productid);
+                ////stage record for removal
+                //context.Products.Remove(existing);
+                ////commit
+                //return context.SaveChanges();
+
+                //logical
+                //  this action will actually be an Update
+                //  any attributes that are required for tracking
+                //      need to be handled
+                //  the attribute that indicates the record is logically
+                //      removed needs to be handled
+
+                //find record to be "deleted"
+                var existing = context.Products.Find(productid);
+                //adjust logical/tracking attributes
+                //existing.LastModified = DateTime.Now;
+                existing.Discontinued = true;
+                //stage for update
+                context.Entry(existing).State = System.Data.Entity.EntityState.Modified;
+                //commit
+                return context.SaveChanges();
             }
         }
         #endregion

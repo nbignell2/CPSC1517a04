@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <div class="alert alert-warning">
             <blockquote style="font-style: italic">
-                TThis illustrates a single web form page CRUD maintenance. 
+                This illustrates a single web form page CRUD maintenance. 
                 This form will use basic bootstrap formatting
             </blockquote>
         </div>
