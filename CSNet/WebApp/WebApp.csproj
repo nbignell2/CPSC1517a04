@@ -164,11 +164,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="SamplePages\FilterSearches.aspx" />
-    <Content Include="SamplePages\MultiRecordODS.aspx" />
-    <Content Include="SamplePages\ProductCRUD.aspx" />
-    <Content Include="SamplePages\SimpleQueries.aspx" />
-    <Content Include="SamplePages\SqlProcQueries.aspx" />
+    <Content Include="Scripts\SamplePages\FilterSearches.aspx" />
+    <Content Include="Scripts\SamplePages\MultiRecordODS.aspx" />
+    <Content Include="Scripts\SamplePages\ProductCRUD.aspx" />
+    <Content Include="Scripts\SamplePages\SimpleQueries.aspx" />
+    <Content Include="Scripts\SamplePages\SqlProcQueries.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootwrap-freecode.js" />
@@ -233,39 +233,39 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SamplePages\FilterSearches.aspx.cs">
+    <Compile Include="Scripts\SamplePages\FilterSearches.aspx.cs">
       <DependentUpon>FilterSearches.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SamplePages\FilterSearches.aspx.designer.cs">
+    <Compile Include="Scripts\SamplePages\FilterSearches.aspx.designer.cs">
       <DependentUpon>FilterSearches.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SamplePages\MultiRecordODS.aspx.cs">
+    <Compile Include="Scripts\SamplePages\MultiRecordODS.aspx.cs">
       <DependentUpon>MultiRecordODS.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SamplePages\MultiRecordODS.aspx.designer.cs">
+    <Compile Include="Scripts\SamplePages\MultiRecordODS.aspx.designer.cs">
       <DependentUpon>MultiRecordODS.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SamplePages\ProductCRUD.aspx.cs">
+    <Compile Include="Scripts\SamplePages\ProductCRUD.aspx.cs">
       <DependentUpon>ProductCRUD.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SamplePages\ProductCRUD.aspx.designer.cs">
+    <Compile Include="Scripts\SamplePages\ProductCRUD.aspx.designer.cs">
       <DependentUpon>ProductCRUD.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SamplePages\SimpleQueries.aspx.cs">
+    <Compile Include="Scripts\SamplePages\SimpleQueries.aspx.cs">
       <DependentUpon>SimpleQueries.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SamplePages\SimpleQueries.aspx.designer.cs">
+    <Compile Include="Scripts\SamplePages\SimpleQueries.aspx.designer.cs">
       <DependentUpon>SimpleQueries.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SamplePages\SqlProcQueries.aspx.cs">
+    <Compile Include="Scripts\SamplePages\SqlProcQueries.aspx.cs">
       <DependentUpon>SqlProcQueries.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SamplePages\SqlProcQueries.aspx.designer.cs">
+    <Compile Include="Scripts\SamplePages\SqlProcQueries.aspx.designer.cs">
       <DependentUpon>SqlProcQueries.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
